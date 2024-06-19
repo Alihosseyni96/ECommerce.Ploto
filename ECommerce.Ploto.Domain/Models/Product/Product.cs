@@ -31,7 +31,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         public IReadOnlyCollection<Image.Image> Images => _images.AsReadOnly();
 
 
-        public Product(string name , Color color , string des , Money price , Dimensions dimensions)
+        private Product(string name , Color color , string des , Money price , Dimensions dimensions)
         {
             Name = name;
             Color = color;
@@ -40,6 +40,12 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Dimensions = dimensions;
             _images = new List<Image.Image>();
         }
+
+        public static Product Create(string name, Color color, string des, Money price, Dimensions dimensions)
+        {
+            return new Product(name, color, des, price, dimensions);
+        }
+
 
         public void SetName(string name) => Name = name;
         public void SetColor (Color color) => Color = color;

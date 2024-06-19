@@ -10,5 +10,6 @@ namespace ECommerce.Ploto.Common.Dommin.Base
     {
         public Task BeginTransactionAsync();
         public Task CommitTransactionAsync();
+        public Task RollbackTransactionAsync();
     }
 }
