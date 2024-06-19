@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C80100B5-3363-4F92-BE82-A067EDC09643}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C6A02BB1-7C53-4166-A602-1E07BAC8DEC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{AB73E022-55AF-44E6-B788-A342295F3B8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E4C84DCF-4C89-455C-BFD9-932B07E1FAA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{5AD1EC2C-8C81-43D0-85FD-6862F876352D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Ploto.Domain", "ECommerce.Ploto.Domain\ECommerce.Ploto.Domain.csproj", "{16DC28E8-18FA-4A14-9276-E9B7847A55BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Ploto.Common", "ECommerce.Ploto.Common\ECommerce.Ploto.Common.csproj", "{1C14EE6A-89AF-41A1-8095-D806B52A4882}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16DC28E8-18FA-4A14-9276-E9B7847A55BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16DC28E8-18FA-4A14-9276-E9B7847A55BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16DC28E8-18FA-4A14-9276-E9B7847A55BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16DC28E8-18FA-4A14-9276-E9B7847A55BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C14EE6A-89AF-41A1-8095-D806B52A4882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C14EE6A-89AF-41A1-8095-D806B52A4882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C14EE6A-89AF-41A1-8095-D806B52A4882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C14EE6A-89AF-41A1-8095-D806B52A4882}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AB73E022-55AF-44E6-B788-A342295F3B8C} = {C80100B5-3363-4F92-BE82-A067EDC09643}
+		{E4C84DCF-4C89-455C-BFD9-932B07E1FAA8} = {C80100B5-3363-4F92-BE82-A067EDC09643}
+		{5AD1EC2C-8C81-43D0-85FD-6862F876352D} = {C80100B5-3363-4F92-BE82-A067EDC09643}
+		{16DC28E8-18FA-4A14-9276-E9B7847A55BE} = {AB73E022-55AF-44E6-B788-A342295F3B8C}
+		{1C14EE6A-89AF-41A1-8095-D806B52A4882} = {E4C84DCF-4C89-455C-BFD9-932B07E1FAA8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB8356EB-2C40-4E76-B1EA-21826CF89AD7}
+	EndGlobalSection
+EndGlobal
