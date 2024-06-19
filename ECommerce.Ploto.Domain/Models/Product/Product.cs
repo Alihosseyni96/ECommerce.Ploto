@@ -1,4 +1,6 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
+using ECommerce.Ploto.Domain.Models.Image;
+using ECommerce.Ploto.Domain.Models.Product.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,36 +11,51 @@ namespace ECommerce.Ploto.Domain.Models.Product
 {
     public class Product : BaseEntity , ITraceableEntity
     {
-        public string Name { get; private set; }
-        public Color Color { get; private set; }
-        public string Description { get; private set; }
-        public decimal Price { get; private set; }
-        public decimal Tax { get;private set; }
+        public string Name { get; protected set; }
+        public Color Color { get; protected set; }
+        public string Description { get; protected set; }
+        public Money Price { get; protected set; }
+        public Dimensions Dimensions { get;protected set; }
+
+        /// <summary>
+        /// For Relations
+        /// </summary>
+        private readonly List<Image.Image> _images;
 
 
-        public Product(string name , Color color , string des , decimal price  , decimal tax)
+
+
+        /// <summary>
+        /// To Expose relarions as readonly 
+        /// </summary>
+        public IReadOnlyCollection<Image.Image> Images => _images.AsReadOnly();
+
+
+        public Product(string name , Color color , string des , Money price , Dimensions dimensions)
         {
             Name = name;
             Color = color;
             Description = des;
             Price = price;
-            Tax = tax;
+            Dimensions = dimensions;
+            _images = new List<Image.Image>();
         }
 
         public void SetName(string name) => Name = name;
         public void SetColor (Color color) => Color = color;
-        public void SetPrice (decimal price) => Price = price;
+        public void SetPrice (Money price) => Price = price;
         public void SetDescription (string description) => Description = description;
-        public void SetTax (decimal tax) => Tax = tax;
         public void Update(Product product)
         {
             Name = product.Name;
             Color = product.Color;
             Price = product.Price;
-            Tax = product.Tax;
             Description = product.Description;
+            Dimensions = product.Dimensions;
         }
-
+        public  void AddImage(Image.Image image) => _images.Add(image);
+        public void RemoveImage(Image.Image image) => _images.Remove(image);
+        public void ClearImages() => _images.Clear();
 
 
 
