@@ -17,15 +17,15 @@ namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
         private readonly double InvalidDimensionSize = 0;
         public Dimensions(double length, double width , double height)
         {
+            ValidateDomensions(length, width, height);
             Length = length;
             Height = height;
             Width = width;
-            ValidateDomensions();
         }
 
-        private void ValidateDomensions()
+        private void ValidateDomensions(double length, double width, double height)
         {
-            if (Length <= InvalidDimensionSize || Height <= InvalidDimensionSize || Width <= InvalidDimensionSize)
+            if (length <= InvalidDimensionSize || height <= InvalidDimensionSize || width <= InvalidDimensionSize)
                 throw new DimensionSizeException();
         }
     }
