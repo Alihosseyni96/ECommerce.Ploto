@@ -21,6 +21,8 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// For Relations
         /// </summary>
         private readonly List<Image.Image> _images;
+        private readonly List<CartItem.CartItem> _cartitems;
+
 
 
 
@@ -29,7 +31,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// To Expose relarions as readonly 
         /// </summary>
         public IReadOnlyCollection<Image.Image> Images => _images.AsReadOnly();
-
+        public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartitems.AsReadOnly();
 
         private Product(string name , Color color , string des , Money price , Dimensions dimensions)
         {
@@ -39,6 +41,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Price = price;
             Dimensions = dimensions;
             _images = new List<Image.Image>();
+            _cartitems = new List<CartItem.CartItem>();
         }
 
         public static Product Create(string name, Color color, string des, Money price, Dimensions dimensions)

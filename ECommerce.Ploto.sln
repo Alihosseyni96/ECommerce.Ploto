@@ -17,7 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Ploto.Domain", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Ploto.Common", "ECommerce.Ploto.Common\ECommerce.Ploto.Common.csproj", "{1C14EE6A-89AF-41A1-8095-D806B52A4882}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Ploto.Infrastructure", "ECommerce.Ploto.Infrastructure\ECommerce.Ploto.Infrastructure.csproj", "{D74106F8-4472-43BC-8183-59D2CBE1A8ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Ploto.Infrastructure", "ECommerce.Ploto.Infrastructure\ECommerce.Ploto.Infrastructure.csproj", "{D74106F8-4472-43BC-8183-59D2CBE1A8ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{0AC24F70-10AA-40B2-8F71-AB04CAB74B37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{14CF1AC7-3E8A-4760-83FB-32B254C5AB3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Ploto.WebAPI", "ECommerce.Ploto.WebAPI\ECommerce.Ploto.WebAPI.csproj", "{F108107A-262D-4F5C-8DAA-C5B06246CB2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +43,10 @@ Global
 		{D74106F8-4472-43BC-8183-59D2CBE1A8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D74106F8-4472-43BC-8183-59D2CBE1A8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D74106F8-4472-43BC-8183-59D2CBE1A8ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F108107A-262D-4F5C-8DAA-C5B06246CB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F108107A-262D-4F5C-8DAA-C5B06246CB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F108107A-262D-4F5C-8DAA-C5B06246CB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F108107A-262D-4F5C-8DAA-C5B06246CB2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +58,9 @@ Global
 		{16DC28E8-18FA-4A14-9276-E9B7847A55BE} = {AB73E022-55AF-44E6-B788-A342295F3B8C}
 		{1C14EE6A-89AF-41A1-8095-D806B52A4882} = {E4C84DCF-4C89-455C-BFD9-932B07E1FAA8}
 		{D74106F8-4472-43BC-8183-59D2CBE1A8ED} = {5AD1EC2C-8C81-43D0-85FD-6862F876352D}
+		{0AC24F70-10AA-40B2-8F71-AB04CAB74B37} = {C80100B5-3363-4F92-BE82-A067EDC09643}
+		{14CF1AC7-3E8A-4760-83FB-32B254C5AB3D} = {C80100B5-3363-4F92-BE82-A067EDC09643}
+		{F108107A-262D-4F5C-8DAA-C5B06246CB2A} = {14CF1AC7-3E8A-4760-83FB-32B254C5AB3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB8356EB-2C40-4E76-B1EA-21826CF89AD7}

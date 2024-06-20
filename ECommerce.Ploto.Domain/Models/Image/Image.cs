@@ -14,10 +14,16 @@ namespace ECommerce.Ploto.Domain.Models.Image
 
         public Guid ProductId { get; protected set; }
 
-        public Image(byte[] file , Type type )
+
+        private Image(byte[] file , Type type )
         {
             File = file;
             Type = type;
+        }
+
+        public static Image Create(byte[] file , Type type )
+        {
+            return new  Image(file , type);
         }
 
 
