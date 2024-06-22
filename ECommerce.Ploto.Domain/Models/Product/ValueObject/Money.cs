@@ -1,4 +1,5 @@
-﻿using ECommerce.Ploto.Domain.Exceptions;
+﻿using ECommerce.Ploto.Common.Dommin.Base;
+using ECommerce.Ploto.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
 {
-    public class Money
+    public class Money : BaseValueObject
     {
         public decimal Amount { get;  }
         public string Currency { get;  }
@@ -19,6 +20,12 @@ namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
 
             Amount = amount;
             Currency = currency;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Amount;
+            yield return Currency;
         }
     }
 }

@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Ploto.Common.Dommin.Base;
 
-namespace ECommerce.Ploto.Domain.Models.User.ValueObject
+namespace ECommerce.Ploto.Domain.Models.User.ValueObject;
+
+public class Address : BaseValueObject
 {
-    public class Address
+    public string City { get;protected set; }
+    public string Avenue { get; protected set; }
+    public int HouseNO { get; protected set; }
+
+    private Address(string city , string avenue  , int houseNo)
     {
-        public string City { get; set; }
-        public string Avenue { get; set; }
-        public int HouseNO { get; set; }
+        City = city;
+        Avenue = avenue;
+        HouseNO = houseNo;
+    }
 
-        private Address(string city , string avenue  , int houseNo)
-        {
-            City = city;
-            Avenue = avenue;
-            HouseNO = houseNo;
-        }
+    public static Address Create(string city, string avenue, int houseNo)
+    {
+        return new Address(city, avenue, houseNo);
+    }
 
-        public static Address Create(string city, string avenue, int houseNo)
-        {
-            return new Address(city, avenue, houseNo);
-        }
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return City;
+        yield return Avenue;
+        yield return HouseNO;
     }
 }
