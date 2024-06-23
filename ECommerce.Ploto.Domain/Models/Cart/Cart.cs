@@ -12,7 +12,7 @@ namespace ECommerce.Ploto.Domain.Models.Cart
     {
         public decimal TotalAmount { get; protected set; }
         public User.User User { get; protected set; }
-        public int UserId { get; protected set; }
+        public Guid UserId { get; protected set; }
         private List<CartItem.CartItem> _cartItems;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace ECommerce.Ploto.Domain.Models.Cart
         /// </summary>
         public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartItems.AsReadOnly();
 
-        private Cart()
+        protected Cart()
         {
 
         }

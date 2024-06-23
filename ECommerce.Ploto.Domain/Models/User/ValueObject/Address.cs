@@ -14,6 +14,7 @@ public class Address : BaseValueObject
         Avenue = avenue;
         HouseNO = houseNo;
     }
+    protected Address() { }
 
     public static Address Create(string city, string avenue, int houseNo)
     {

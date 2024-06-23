@@ -8,11 +8,12 @@ public class Name :BaseValueObject
     public string FirtsName { get;protected set; }
     public string LastName { get;protected set; }
 
-    private Name(string fName , string lName)
+    public Name(string fName , string lName)
     {
         FirtsName = fName;
         LastName = lName;
     }
+    protected Name() { }
 
     public static Name Create(string fName , string lName)
     {

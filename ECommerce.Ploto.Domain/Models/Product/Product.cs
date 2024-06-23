@@ -17,6 +17,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         public Money Price { get; protected set; }
         public Dimensions Dimensions { get;protected set; }
 
+
         /// <summary>
         /// For Relations
         /// </summary>
@@ -28,11 +29,14 @@ namespace ECommerce.Ploto.Domain.Models.Product
 
 
         /// <summary>
-        /// To Expose relarions as readonly 
+        /// BAcking Feild  
         /// </summary>
         public IReadOnlyCollection<Image.Image> Images => _images.AsReadOnly();
         public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartitems.AsReadOnly();
-
+        protected Product()
+        {
+            
+        }
         private Product(string name , Color color , string des , Money price , Dimensions dimensions)
         {
             Name = name;

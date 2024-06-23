@@ -21,6 +21,10 @@ namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
             Amount = amount;
             Currency = currency;
         }
+        protected Money()
+        {
+            
+        }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

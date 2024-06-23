@@ -14,6 +14,7 @@ public class HomeNumber : BaseValueObject
         CityCode = cityName;
 
     }
+    protected HomeNumber() { }
 
     private static readonly string[] CityCodes = new string[5] { "021", "063", "074", "054", "087" };
     private static readonly int NumberLenght = 9;

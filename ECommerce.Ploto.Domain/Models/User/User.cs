@@ -1,5 +1,6 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Domain.Models.Cart;
+using ECommerce.Ploto.Domain.Models.Image;
 using ECommerce.Ploto.Domain.Models.User.ValueObject;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,20 @@ namespace ECommerce.Ploto.Domain.Models.User
 {
     public class User : BaseEntity , IAggregateRoot
     {
-        public Name Name { get; set; }
+        public Name Name { get; protected set; }
         public string PhoneNumber { get;protected set; }
-        public HomeNumber HomeNumber { get; set; }
-        public Address Address { get; set; }
+        public HomeNumber HomeNumber { get; protected set; }
+        public Address Address { get; protected set; }
         public Cart.Cart Cart { get; protected set; }
+        public Guid CartId { get; set; }
 
+        public Guid AvatarId { get; protected set; }
+        public Image.Image Avatar { get; protected set; }
 
+        protected User()
+        {
+            
+        }
         private User(Name name , string phoneNumber , HomeNumber homeNumber , Address address)
         {
             Name = name;

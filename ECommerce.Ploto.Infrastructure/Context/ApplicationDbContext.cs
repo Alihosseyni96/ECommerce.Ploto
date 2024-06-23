@@ -13,14 +13,15 @@ namespace ECommerce.Ploto.Infrastructure.Context
     {
         private readonly IMediator _mediator;
 
-        public ApplicationDbContext(IMediator mediator)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IMediator mediator): base(options)   
         {
             _mediator = mediator;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
         }
 

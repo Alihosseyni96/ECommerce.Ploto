@@ -14,15 +14,19 @@ public class Dimensions : BaseValueObject
     public double Height { get; }
     public double Width { get; }
 
+
+    private readonly double InvalidDimensionSize = 0;
+    protected Dimensions(double length, double width, double height)
+    {
+        ValidateDomensions(length, width, height);
+        Length = length;
+        Height = height;
+        Width = width;
+    }
+    protected Dimensions()
+    {
         
-        private readonly double InvalidDimensionSize = 0;
-        public Dimensions(double length, double width , double height)
-        {
-            ValidateDomensions(length, width, height);
-            Length = length;
-            Height = height;
-            Width = width;
-        }
+    }
 
     private void ValidateDomensions(double length, double width, double height)
     {

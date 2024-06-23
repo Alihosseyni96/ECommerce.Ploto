@@ -16,11 +16,15 @@ namespace ECommerce.Ploto.Domain.Models.CartItem
         /// <summary>
         /// Realations
         /// </summary>
-        public int ProductId { get; protected set; }
+        public Guid ProductId { get; protected set; }
         public Product.Product Product { get; protected set; }
         public Cart.Cart Cart { get; protected set; }
-        public int CartId { get; set; }
+        public Guid CartId { get; set; }
 
+        protected CartItem()
+        {
+            
+        }
         private CartItem(Product.Product product , int count)
         {
             Product = product;

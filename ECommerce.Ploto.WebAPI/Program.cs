@@ -1,3 +1,7 @@
+using ECommerce.Ploto.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMediatR(cfg =>
+     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql("Host=localhost;Database=ploto-database;Username=beepdb_devu;Password=6720bd679a7c46d2a109;Port=25060");
+});
 
 var app = builder.Build();
 
