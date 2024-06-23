@@ -1,33 +1,34 @@
-﻿using ECommerce.Ploto.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Ploto.Common.Dommin.Base;
+using ECommerce.Ploto.Domain.Exceptions;
 
-namespace ECommerce.Ploto.Domain.Models.User.ValueObject
+namespace ECommerce.Ploto.Domain.Models.User.ValueObject;
+
+public class Name :BaseValueObject
 {
-    public class Name
+    public string FirtsName { get;protected set; }
+    public string LastName { get;protected set; }
+
+    private Name(string fName , string lName)
     {
-        public string FirtsName { get;protected set; }
-        public string LastName { get;protected set; }
+        FirtsName = fName;
+        LastName = lName;
+    }
 
-        private Name(string fName , string lName)
-        {
-            FirtsName = fName;
-            LastName = lName;
-        }
+    public static Name Create(string fName , string lName)
+    {
+        Validation(fName, lName);
+        return new Name(fName , lName);
+    }
 
-        public static Name Create(string fName , string lName)
-        {
-            Validation(fName, lName);
-            return new Name(fName , lName);
-        }
+    private static void Validation(string fName , string lName)
+    {
+        if (string.IsNullOrEmpty(fName) || string.IsNullOrEmpty(lName))
+            throw new UserNameValidationException();
+    }
 
-        private static void Validation(string fName , string lName)
-        {
-            if (string.IsNullOrEmpty(fName) || string.IsNullOrEmpty(lName))
-                throw new UserNameValidationException();
-        }
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return FirtsName;
+        yield return LastName;
     }
 }

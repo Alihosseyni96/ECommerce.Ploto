@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ECommerce.Ploto.Common.Dommin.Base;
 
-namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
+namespace ECommerce.Ploto.Domain.Models.Product.ValueObject;
+
+public class Dimensions : BaseValueObject
 {
-    public class Dimensions
-    {
-        public double Length { get; }
-        public double Height { get; }
-        public double Width { get; }
+    public double Length { get; }
+    public double Height { get; }
+    public double Width { get; }
 
         
         private readonly double InvalidDimensionSize = 0;
@@ -23,10 +24,16 @@ namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
             Width = width;
         }
 
-        private void ValidateDomensions(double length, double width, double height)
-        {
-            if (length <= InvalidDimensionSize || height <= InvalidDimensionSize || width <= InvalidDimensionSize)
-                throw new DimensionSizeException();
-        }
+    private void ValidateDomensions(double length, double width, double height)
+    {
+        if (Length <= InvalidDimensionSize || Height <= InvalidDimensionSize || Width <= InvalidDimensionSize)
+            throw new DimensionSizeException();
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Length;
+        yield return Height;
+        yield return Width;
     }
 }
