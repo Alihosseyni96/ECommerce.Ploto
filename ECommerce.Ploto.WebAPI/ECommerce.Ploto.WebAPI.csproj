@@ -16,9 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ECommerce.Ploto.Application\ECommerce.Ploto.Application.csproj" />
     <ProjectReference Include="..\ECommerce.Ploto.Common\ECommerce.Ploto.Common.csproj" />
     <ProjectReference Include="..\ECommerce.Ploto.Domain\ECommerce.Ploto.Domain.csproj" />
     <ProjectReference Include="..\ECommerce.Ploto.Infrastructure\ECommerce.Ploto.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,7 @@
+using AutoMapper;
+using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
+using ECommerce.Ploto.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +16,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg =>
      cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddAutoMapper(typeof(ECommerce.Ploto.Application.Queries.User.GetAllUserQuery.Mapper).Assembly);
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();    
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
