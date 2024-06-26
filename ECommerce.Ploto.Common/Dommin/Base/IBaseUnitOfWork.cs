@@ -8,10 +8,33 @@ namespace ECommerce.Ploto.Common.Dommin.Base
 {
     public interface IBaseUnitOfWork
     {
-        public Task BeginTransactionScope();
-        public Task CompleteTransactionScope();
-        public Task BeginTransactionAsync();
-        public Task CommitTransactionAsync();
-        public Task RollbackTransactionAsync();
+        /// <summary>
+        /// Open TransactionScope
+        /// </summary>
+        public void BeginTransactionScope();
+
+        /// <summary>
+        /// Complete Oped TransactionScope 
+        /// </summary>
+        public void CompleteTransactionScope();
+
+        /// <summary>
+        /// Begin Transaction
+        /// </summary>
+        /// <returns></returns>
+        public Task BeginTransactionAsync(CancellationToken ct  = default);
+        /// <summary>
+        /// Commit Transaction
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public Task CommitTransactionAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Apply Save Change On DataBase
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public Task SaveChangeAsync(CancellationToken ct = default);
     }
 }
