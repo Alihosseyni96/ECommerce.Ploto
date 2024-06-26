@@ -9,5 +9,6 @@ namespace ECommerce.Ploto.Domain.UnitOfWork
 {
     public interface IUnitOfWork: IBaseUnitOfWork
     {
+
     }
 }

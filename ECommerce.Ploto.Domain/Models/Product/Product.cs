@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Domain.Models.Product
 {
-    public class Product : BaseEntity , ITraceableEntity
+    public class Product : BaseEntity , ITraceableEntity , IAggregateRoot
     {
         public string Name { get; protected set; }
         public Color Color { get; protected set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Domain.Models.Cart
 {
-    public class Cart : BaseEntity , ITraceableEntity
+    public class Cart : BaseEntity 
     {
         public decimal TotalAmount { get; protected set; }
         public User.User User { get; protected set; }
