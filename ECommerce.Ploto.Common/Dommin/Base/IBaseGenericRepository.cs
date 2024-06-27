@@ -13,6 +13,10 @@ namespace ECommerce.Ploto.Common.Dommin.Base
         Task<IEnumerable<T>> GetAllAsync(CancellationToken ct  = default);
         Task AddAsync(T entity, CancellationToken ct = default);
         Task DeleteAsync(T entity);
+        Task<FilteredResult> FindByFilterPaginatedAsync(
+            CancellationToken ct = default,
+            BaseQueryFilter? filter = null);
+
         Task<IEnumerable<T>> FindAsync(
             CancellationToken cancellationToken = default,
             Expression<Func<T, bool>>? predicate = null ,

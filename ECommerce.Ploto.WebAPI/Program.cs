@@ -1,4 +1,5 @@
 using AutoMapper;
+using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
 using ECommerce.Ploto.Infrastructure.UnitOfWork;
@@ -18,6 +19,10 @@ builder.Services.AddMediatR(cfg =>
      cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 builder.Services.AddAutoMapper(typeof(ECommerce.Ploto.Application.Queries.User.GetAllUserQuery.Mapper).Assembly);
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblies(typeof(GetAllUserQueryHandler).Assembly);
+});
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();    
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
 {
-    public class GetAllUserQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<UserDto>>
+    public class GetAllUserQueryHandler : IRequestHandler<GetUsersQuery, FilteredResult>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -20,14 +21,12 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
             _mapper = mapper;
         }
 
-        async Task<IEnumerable<UserDto>> IRequestHandler<GetUsersQuery, IEnumerable<UserDto>>.Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<FilteredResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _unitOfWork.UserRepository
-                .FindAsync(cancellationToken);
+            var users = await _unitOfWork
+                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request);
 
-            return _mapper.Map<IEnumerable<UserDto>>(users);
-
+            return users;
         }
-        
     }
 }
