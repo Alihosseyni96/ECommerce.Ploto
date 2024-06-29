@@ -21,7 +21,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// <summary>
         /// For Relations
         /// </summary>
-        private readonly List<Image.Image> _images;
+        private readonly List<Image.ProductImage> _images;
         private readonly List<CartItem.CartItem> _cartitems;
 
 
@@ -31,7 +31,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// <summary>
         /// BAcking Feild  
         /// </summary>
-        public IReadOnlyCollection<Image.Image> Images => _images.AsReadOnly();
+        public IReadOnlyCollection<Image.ProductImage> Images => _images.AsReadOnly();
         public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartitems.AsReadOnly();
         protected Product()
         {
@@ -44,7 +44,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Description = des;
             Price = price;
             Dimensions = dimensions;
-            _images = new List<Image.Image>();
+            _images = new List<Image.ProductImage>();
             _cartitems = new List<CartItem.CartItem>();
         }
 
@@ -66,8 +66,8 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Description = product.Description;
             Dimensions = product.Dimensions;
         }
-        public  void AddImage(Image.Image image) => _images.Add(image);
-        public void RemoveImage(Image.Image image) => _images.Remove(image);
+        public  void AddImage(Image.ProductImage image) => _images.Add(image);
+        public void RemoveImage(Image.ProductImage image) => _images.Remove(image);
         public void ClearImages() => _images.Clear();
 
 

@@ -23,7 +23,7 @@ namespace ECommerce.Ploto.Common.Dommin.Base
 
         private  List<INotification> _domainEvents;
 
-        public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
+        public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
 
 
         public void AddDomainEvent(INotification domainEvent)

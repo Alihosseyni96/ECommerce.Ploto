@@ -4,6 +4,7 @@ using ECommerce.Ploto.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Ploto.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240629110844_nullableUserProps3")]
+    partial class nullableUserProps3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,32 +84,30 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset?>("CreateAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
                     b.Property<byte[]>("File")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Image");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Image");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Product.Product", b =>
@@ -175,28 +176,6 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.ProductImage", b =>
-                {
-                    b.HasBaseType("ECommerce.Ploto.Domain.Models.Image.Image");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasDiscriminator().HasValue("ProductImage");
-                });
-
-            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.UserAvaterImage", b =>
-                {
-                    b.HasBaseType("ECommerce.Ploto.Domain.Models.Image.Image");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasDiscriminator().HasValue("UserAvaterImage");
-                });
-
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.CartItem.CartItem", b =>
                 {
                     b.HasOne("ECommerce.Ploto.Domain.Models.Cart.Cart", "Cart")
@@ -212,6 +191,17 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.Image", b =>
+                {
+                    b.HasOne("ECommerce.Ploto.Domain.Models.Product.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -273,7 +263,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.User.User", b =>
                 {
-                    b.HasOne("ECommerce.Ploto.Domain.Models.Image.UserAvaterImage", "Avatar")
+                    b.HasOne("ECommerce.Ploto.Domain.Models.Image.Image", "Avatar")
                         .WithOne("User")
                         .HasForeignKey("ECommerce.Ploto.Domain.Models.User.User", "AvatarId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -373,21 +363,16 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.ProductImage", b =>
-                {
-                    b.HasOne("ECommerce.Ploto.Domain.Models.Product.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Cart.Cart", b =>
                 {
                     b.Navigation("CartItems");
 
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.Image", b =>
+                {
                     b.Navigation("User")
                         .IsRequired();
                 });
@@ -397,11 +382,6 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.UserAvaterImage", b =>
-                {
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

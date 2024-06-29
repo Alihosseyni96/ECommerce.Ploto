@@ -28,7 +28,16 @@ namespace ECommerce.Ploto.Infrastructure.Context
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await PublishDomainEvents();
-            return await base.SaveChangesAsync(cancellationToken);
+            try
+            {
+                return await base.SaveChangesAsync(cancellationToken);
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         private async Task PublishDomainEvents()
@@ -36,6 +45,8 @@ namespace ECommerce.Ploto.Infrastructure.Context
             var entitiesWithDomainEvens =
                 this.ChangeTracker.Entries<BaseEntity>()
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+
+
 
             var domainEvents = entitiesWithDomainEvens
                 .SelectMany(x=> x.Entity.DomainEvents)

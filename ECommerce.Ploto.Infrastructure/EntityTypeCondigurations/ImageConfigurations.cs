@@ -11,21 +11,11 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
 {
-    internal class Imageentityconfigurations : IEntityTypeConfiguration<Image>
+    internal class ImageConfigurations : IEntityTypeConfiguration<Image>
     {
         public void Configure(EntityTypeBuilder<Image> builder)
         {
-            
             builder.HasKey(x => x.Id);
-
-            builder.HasOne(i => i.User)
-                .WithOne(u => u.Avatar)
-                .HasForeignKey<Image>(i => i.UserId);
-
-            builder.HasOne(i => i.Product)
-                .WithMany(u => u.Images)
-                .HasForeignKey(i => i.ProductId);
-
         }
     }
 }

@@ -61,11 +61,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
             builder.HasOne(u => u.Cart)
                 .WithOne(c => c.User)
                 .HasForeignKey<User>(u => u.CartId);
-                
-            builder.HasOne(u=> u.Avatar)
-                .WithOne(i=> i.User)
-                .HasForeignKey<User>(u=> u.AvatarId)
-                .OnDelete(DeleteBehavior.Restrict);  
+
+            builder.HasOne(u => u.Avatar)
+                .WithOne(i => i.User)
+                .HasForeignKey<User>(u => u.AvatarId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

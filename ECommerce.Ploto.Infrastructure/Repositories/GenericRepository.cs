@@ -117,6 +117,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
         public async Task<T?> GetbyIdAsync(Guid id, CancellationToken ct = default)
         {
             return await _dbSet.FindAsync(new[] {id}, ct);
+            
         }
     }
 }

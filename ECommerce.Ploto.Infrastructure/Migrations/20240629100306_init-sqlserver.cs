@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ECommerce.Ploto.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initsqlserver : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +15,11 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "Cart",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "numeric", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,17 +30,17 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
-                    Color = table.Column<int>(type: "integer", nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    Price_Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    Price_Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
-                    dimension_length = table.Column<double>(type: "double precision", nullable: false),
-                    dimension_height = table.Column<double>(type: "double precision", nullable: false),
-                    dimension_width = table.Column<double>(type: "double precision", nullable: false),
-                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    Color = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Price_Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price_Currency = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    dimension_length = table.Column<double>(type: "float", nullable: false),
+                    dimension_height = table.Column<double>(type: "float", nullable: false),
+                    dimension_width = table.Column<double>(type: "float", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,12 +51,12 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "CartItem",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Count = table.Column<int>(type: "integer", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CartId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,13 +79,13 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "Image",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    File = table.Column<byte[]>(type: "bytea", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    File = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,19 +102,19 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name_LastName = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
-                    home_number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    city_code = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
-                    city = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    avenue = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    house_no = table.Column<int>(type: "integer", nullable: false),
-                    CartId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AvatarId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    first_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    home_number = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    city_code = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    city = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    avenue = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    house_no = table.Column<int>(type: "int", nullable: false),
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AvatarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {

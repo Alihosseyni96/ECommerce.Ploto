@@ -26,7 +26,7 @@ public class HomeNumber : BaseValueObject
 
     private static void Validation(string number, string cityCode)
     {
-        if (CityCodes.Contains(cityCode)) throw new InvalidCityCodeException();
+        if (!CityCodes.Contains(cityCode)) throw new InvalidCityCodeException();
 
         if (number.Length != NumberLenght) throw new InvalidNumberLenghtException();
 
