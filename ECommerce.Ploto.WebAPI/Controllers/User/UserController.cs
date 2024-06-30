@@ -5,6 +5,8 @@ using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Common.Extensions;
 using ECommerce.Ploto.WebAPI.Controllers.User.RequestDTO;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;

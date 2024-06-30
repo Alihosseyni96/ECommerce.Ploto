@@ -10,10 +10,10 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
 {
     public static class CacheServiceCollectionExtensions
     {
-        public static IServiceCollection AddCacheAbstraction(this IServiceCollection services , Action<CacheConfig> cacheBuilder) 
+        public static IServiceCollection AddCacheAbstraction(this IServiceCollection services , Action<CacheConfig> cacheConfig) 
         {
-            var builder = new CacheConfig(services);
-            cacheBuilder(builder);
+            var config = new CacheConfig(services);
+            cacheConfig(config);
             return services;
         }
 
@@ -32,12 +32,12 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
                 return this;
             }
 
-            public CacheConfig UseRedisCache(Action<RedisCacheOptions> setupAction)
+            public CacheConfig UseRedisCache(Action<RedisCacheOptions> action)
             {
-                var options = new RedisCacheOptions();
-                setupAction(options);
+                var redisOptions = new RedisCacheOptions();
+                action(redisOptions);
                 
-                _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(options.ConnectionString));
+                _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisOptions.ConnectionString));
                 _services.AddSingleton<ICacheService, RedisCacheService>();
                 return this;
             }

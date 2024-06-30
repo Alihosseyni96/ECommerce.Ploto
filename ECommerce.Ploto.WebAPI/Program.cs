@@ -6,7 +6,7 @@ using ECommerce.Ploto.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Ploto.Common.CacheAbstraction.Configurations;
-
+using ECommerce.Ploto.Common.AuthenticationAbstraction.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -40,8 +40,28 @@ builder.Services.AddCacheAbstraction(config =>
     });
 });
 
-var app = builder.Build();
+builder.Services.AddAuthenticationAbstraction(config =>
+{
+    config.UseCookieBaseAuthentication(options =>
+    {
+        options.IsPersistent = true;
+        options.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30);
+        options.IssueDateUTC = DateTimeOffset.UtcNow;
+        options.AllowRefresh = false;
+    });
 
+    //config.UseTokenBaseAuthentication(options =>
+    //{
+    //    options.Expires =DateTime.Now.AddDays(30);
+    //    options.Issuer = builder.Configuration["JWT:Issuer"];
+    //    options.Audience = builder.Configuration["JWT:Audience"];
+    //    options.JwtKey = builder.Configuration["JWT:JwtKey"];
+    //    options.AddingAuthenticationServicesToDI = true;
+    //});
+});
+
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -56,3 +76,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+//app.UseAuthorization(); => it  adds the authentication middleware to the request pipeline. This middleware is responsible for authenticating users and setting the HttpContext.User
+// property with the user’s principal if authentication is successful. it can open token with properties which you gave in DI container into builder.services.AddAhtnetication();
+//Typically, it should be called before app.UseAuthorization()
+
+
+//app.UseAuthentication()=> when you add this , you can use [Authorize] to see request is allowd to access action , it checks with see  , HttoContext.user.Isauthenticated = true 
+// and if you set Role like [Authorize(Role = "Admin")] it will go to HttpContext.User.Claims and search if there are any claim with Tyoe role = Admin , if exist , the requst is pass into action
