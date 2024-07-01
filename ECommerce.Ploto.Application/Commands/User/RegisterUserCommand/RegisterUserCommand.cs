@@ -21,6 +21,8 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
         public string Avenue { get;  set; }
         public int HouseNO { get;  set; }
 
+
+
         //[JsonIgnore]
         //public byte[]? Avatar { get;  set; }
 

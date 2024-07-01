@@ -119,5 +119,22 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
             return await _dbSet.FindAsync(new[] {id}, ct);
             
         }
+
+        public async Task<T?> SingleOrDefaultAsync(Expression<Func<T,bool>> predicate, CancellationToken ct = default, params Expression<Func<T, object>>[]? include)
+        {
+            IQueryable<T> query =  _dbSet;
+            
+            if(include != null)
+            {
+                foreach(var item in include)
+                {
+                    query = query.Include(item);
+                }
+            }
+                
+            return await query.SingleOrDefaultAsync(predicate , ct);
+        }
+
+
     }
 }

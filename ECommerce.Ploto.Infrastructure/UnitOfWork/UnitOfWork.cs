@@ -1,8 +1,10 @@
 ﻿using ECommerce.Ploto.Domain.IRepositories.Product;
+using ECommerce.Ploto.Domain.IRepositories.Role;
 using ECommerce.Ploto.Domain.IRepositories.User;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
 using ECommerce.Ploto.Infrastructure.Repositories.Product;
+using ECommerce.Ploto.Infrastructure.Repositories.Role;
 using ECommerce.Ploto.Infrastructure.Repositories.User;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -26,6 +28,7 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
 
         public IUserRepository UserRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
+        public IRoleRepository RoleRepository { get; set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             if (db == null) throw new ArgumentNullException(nameof(db));
@@ -35,6 +38,8 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
             if (UserRepository == null) UserRepository = new UserRepository(db);
 
             if (ProductRepository == null) ProductRepository = new ProductRepository(db);
+
+            if(RoleRepository == null) RoleRepository = new RoleRepositopry(db);    
         }
 
 

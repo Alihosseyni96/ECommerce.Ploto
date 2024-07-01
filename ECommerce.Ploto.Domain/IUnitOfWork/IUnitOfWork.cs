@@ -1,5 +1,6 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Domain.IRepositories.Product;
+using ECommerce.Ploto.Domain.IRepositories.Role;
 using ECommerce.Ploto.Domain.IRepositories.User;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace ECommerce.Ploto.Domain.UnitOfWork
     {
          IUserRepository UserRepository { get; }   
          IProductRepository ProductRepository { get;  }
+         IRoleRepository RoleRepository { get; }
     }
 }

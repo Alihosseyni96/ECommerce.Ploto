@@ -14,10 +14,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ECommerce.Ploto.Domain.Models.User
 {
-    public class User : BaseEntity , IAggregateRoot
+    public class User : BaseEntity, IAggregateRoot
     {
         public Name Name { get; protected set; }
-        public string PhoneNumber { get;protected set; }
+        public string PhoneNumber { get; protected set; }
+        public string Password { get; set; }
         public HomeNumber HomeNumber { get; protected set; }
         public Address Address { get; protected set; }
         public Cart.Cart? Cart { get; protected set; }
@@ -25,12 +26,18 @@ namespace ECommerce.Ploto.Domain.Models.User
 
         public Guid? AvatarId { get; protected set; }
         public Image.UserAvaterImage? Avatar { get; protected set; }
+        private List<Role.Role> _roles;
 
+
+        /// <summary>
+        /// backing Feild
+        /// </summary>
+        public IReadOnlyCollection<Role.Role> Roles => _roles.AsReadOnly();
         protected User()
         {
-            
+
         }
-        private User(Name name , string phoneNumber , HomeNumber homeNumber , Address address)
+        private User(Name name, string phoneNumber, HomeNumber homeNumber, Address address)
         {
             Name = name;
             PhoneNumber = phoneNumber;
@@ -53,10 +60,10 @@ namespace ECommerce.Ploto.Domain.Models.User
 
         public Cart.Cart CreateCart()
         {
-            
-            if (this.Cart is  null)
+
+            if (this.Cart is null)
             {
-               return ECommerce.Ploto.Domain.Models.Cart.Cart.Create();
+                return ECommerce.Ploto.Domain.Models.Cart.Cart.Create();
             }
             return this.Cart;
         }
@@ -71,6 +78,21 @@ namespace ECommerce.Ploto.Domain.Models.User
             Avatar!.Update(file);
         }
 
-        
+        public void AddRole(Role.Role[] systemRoleNames, Role.Role[]? existedRoles = null, params string[] newRoels)
+        {
+            if (_roles is null)
+            {
+                _roles = new List<Role.Role>();
+            }
+            var toAdd = newRoels.Except(existedRoles.Select(r => r.Name)).ToArray();
+
+
+            foreach (string name in toAdd)
+            {
+                _roles.Add(Role.Role.Create(name, systemRoleNames));
+            }
+        }
+
+
     }
 }

@@ -46,6 +46,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Dimensions = dimensions;
             _images = new List<Image.ProductImage>();
             _cartitems = new List<CartItem.CartItem>();
+
         }
 
         public static Product Create(string name, Color color, string des, Money price, Dimensions dimensions)
