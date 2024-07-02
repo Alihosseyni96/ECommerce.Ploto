@@ -89,7 +89,7 @@ namespace ECommerce.Ploto.Domain.Models.User
 
             foreach (string name in toAdd)
             {
-                _roles.Add(Role.Role.Create(name, systemRoleNames));
+                _roles.Add(Role.Role.AddRole(name, systemRoleNames));
             }
         }
 

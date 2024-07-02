@@ -67,6 +67,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
                 .HasForeignKey<User>(u => u.AvatarId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(u => u.Roles)
+                .WithMany();
+                
+            //Simplest way To Configure Many-To-Many Relation between User and Role Is Like way i impelmented in this Project!
+
         }
     }
 }

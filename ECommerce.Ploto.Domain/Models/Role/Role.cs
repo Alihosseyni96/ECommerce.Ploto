@@ -9,28 +9,42 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Domain.Models.Role
 {
-    public class Role : BaseEntity , IAggregateRoot
+    public class Role : BaseEntity, IAggregateRoot
     {
         public string Name { get; private set; }
-        private List<User.User> _users;
-        
-
-        /// <summary>
-        /// Backing field
-        /// </summary>
-        public IReadOnlyCollection<User.User> Users => _users.AsReadOnly();
-        private Role(string name)
+        private Role( string name)
         {
             Name = name;
-            _users = new List<User.User>();
         }
 
-        public static Role Create(string name, Role[] systemRoleNames)
+        private Role(Guid id , string name)
         {
-            if (!systemRoleNames.Select(r=> r.Name).Contains(name))
+            base.Id = id;
+            Name = name;
+        }
+
+        /// <summary>
+        /// too Add Role in role list of a user
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="systemRoleNames"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidRoleNameEsception"></exception>
+        public static Role AddRole(string name, Role[] systemRoleNames)
+        {
+            if (!systemRoleNames.Select(r => r.Name).Contains(name))
                 throw new InvalidRoleNameEsception();
 
             return new Role(name);
+        }
+
+        /// <summary>
+        /// to create role in database with seed
+        /// </summary>
+        /// <returns></returns>
+        public static Role Create(Guid id , string name)
+        {
+            return new Role(id , name); 
         }
     }
 }
