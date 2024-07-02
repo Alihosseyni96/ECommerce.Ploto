@@ -11,6 +11,7 @@ internal class ProductImageConfigurations : IEntityTypeConfiguration<ProductImag
 
         builder.HasOne(x => x.Product)
             .WithMany(x => x.Images)
-            .HasForeignKey(x => x.ProductId);
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

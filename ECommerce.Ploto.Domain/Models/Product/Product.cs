@@ -33,10 +33,14 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// </summary>
         public IReadOnlyCollection<Image.ProductImage> Images => _images.AsReadOnly();
         public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartitems.AsReadOnly();
+
+        // Protected constructor for ORM
         protected Product()
         {
             
         }
+
+        // Private constructor for creating instances
         private Product(string name , Color color , string des , Money price , Dimensions dimensions)
         {
             Name = name;
@@ -49,6 +53,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
 
         }
 
+        // Static factory method for creating new instances
         public static Product Create(string name, Color color, string des, Money price, Dimensions dimensions)
         {
             return new Product(name, color, des, price, dimensions);

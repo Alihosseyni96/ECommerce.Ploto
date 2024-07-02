@@ -11,6 +11,7 @@ internal class UserAvatarImageConfigurations : IEntityTypeConfiguration<UserAvat
 
         builder.HasOne(x => x.User)
             .WithOne(x => x.Avatar)
-            .HasForeignKey<UserAvaterImage>(x => x.UserId);
+            .HasForeignKey<UserAvaterImage>(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
