@@ -36,7 +36,7 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.Configuration
             {
                 var coockiOptions = new CookieAuthenticationProperties();     // action will fill coockiOption
                 action(coockiOptions);
-
+                _service.AddHttpContextAccessor();
                 _service.AddScoped<ICookieBaseAuthenticationService, CookieBaseAuthenticationService>();
                 _service.AddSingleton(coockiOptions);
                 _service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

@@ -29,8 +29,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    //options.UseNpgsql("Host=localhost;Database=ploto-database;Username=beepdb_devu;Password=6720bd679a7c46d2a109;Port=25060");
-    options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseNpgsql("Host=localhost;Database=ploto;Username=pourya;Password=123456;Port=5432");
+    //options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 });
 
 #region Cache Abstraction
@@ -38,10 +38,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddCacheAbstraction(config =>
 {
     #region Redis
-    config.UseRedisCache(options =>
-    {
-        options.ConnectionString = builder.Configuration["Redis:ConnectionString"]!;
-    });
+    //config.UseRedisCache(options =>
+    //{
+    //    options.ConnectionString = builder.Configuration["Redis:ConnectionString"]!;
+    //});
 
     #endregion
 

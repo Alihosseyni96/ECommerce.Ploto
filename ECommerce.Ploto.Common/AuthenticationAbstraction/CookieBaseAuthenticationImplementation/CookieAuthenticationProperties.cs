@@ -19,7 +19,7 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.CookieBaseAuthenticat
         /// <summary>
         /// Redirect URI after login
         /// </summary>
-        public string? RedirectUri { get; set; } = "default-path";
+        public string? RedirectUri { get; set; } = "/default-path";
         /// <summary>
         /// Set the issued time
         /// </summary>
@@ -31,10 +31,10 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.CookieBaseAuthenticat
         /// <summary>
         /// Login Path 
         /// </summary>
-        public string LoginPath { get; set; } = "default-path";
+        public string LoginPath { get; set; } = "/default-path";
         /// <summary>
         /// Logout Path 
         /// </summary>
-        public string LogoutPath { get; set; }= "default-path";
+        public string LogoutPath { get; set; }= "/default-path";
     }
 }

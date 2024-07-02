@@ -28,6 +28,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
 
             public CacheConfig UseInMemoryCache()
             {
+                _services.AddMemoryCache();
                 _services.AddSingleton<ICacheService, InMemoryCacheService>();
                 return this;
             }

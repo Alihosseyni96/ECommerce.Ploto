@@ -13,11 +13,13 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.CookieBaseAuthenticat
     public class CookieBaseAuthenticationService : ICookieBaseAuthenticationService
     {
         private readonly CookieAuthenticationProperties _options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpContext _httpContext;
-        public CookieBaseAuthenticationService(CookieAuthenticationProperties options, HttpContext httpContext)
+        public CookieBaseAuthenticationService(CookieAuthenticationProperties options, IHttpContextAccessor httpContextAccessor)
         {
             _options = options;
-            _httpContext = httpContext;
+            _httpContextAccessor = httpContextAccessor;
+            _httpContext = _httpContextAccessor.HttpContext;
         }
         public async Task<bool> LoginAsync(params (string claimKey, string value)[] addClaims)
         {
@@ -36,7 +38,6 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.CookieBaseAuthenticat
                 RedirectUri = _options.RedirectUri,
                 AllowRefresh = _options.AllowRefresh,
             };
-
             await _httpContext.SignInAsync(
                      CookieAuthenticationDefaults.AuthenticationScheme,
                      new ClaimsPrincipal(claimsIdentity),
