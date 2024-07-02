@@ -12,6 +12,9 @@ namespace ECommerce.Ploto.Domain.Models.Role
     public class Role : BaseEntity, IAggregateRoot
     {
         public string Name { get; private set; }
+        private List<UserRole.UserRole>? _userRole;
+
+        public IReadOnlyCollection<UserRole.UserRole>? UserRoles => _userRole?.AsReadOnly();
         private Role( string name)
         {
             Name = name;
@@ -23,20 +26,6 @@ namespace ECommerce.Ploto.Domain.Models.Role
             Name = name;
         }
 
-        /// <summary>
-        /// too Add Role in role list of a user
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="systemRoleNames"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidRoleNameEsception"></exception>
-        public static Role AddRole(string name, Role[] systemRoleNames)
-        {
-            if (!systemRoleNames.Select(r => r.Name).Contains(name))
-                throw new InvalidRoleNameEsception();
-
-            return new Role(name);
-        }
 
         /// <summary>
         /// to create role in database with seed

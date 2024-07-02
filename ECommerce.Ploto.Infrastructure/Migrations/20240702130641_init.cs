@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ECommerce.Ploto.Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -52,7 +54,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Createdby = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
@@ -149,27 +151,39 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleUser",
+                name: "UserRole",
                 columns: table => new
                 {
-                    RolesId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Createdby = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UsersId });
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleUser_Role_RolesId",
-                        column: x => x.RolesId,
+                        name: "FK_UserRole_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RoleUser_User_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UserRole_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "Id", "CreateAt", "Createdby", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("5ac02057-eb37-4eb6-9094-d2a12ae4bee7"), null, null, "user" },
+                    { new Guid("6cc22f35-2d3f-4c85-8fdf-2577b330061e"), null, null, "Admin" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -188,11 +202,6 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleUser_UsersId",
-                table: "RoleUser",
-                column: "UsersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_User_AvatarId",
                 table: "User",
                 column: "AvatarId",
@@ -203,6 +212,16 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 table: "User",
                 column: "CartId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_RoleId",
+                table: "UserRole",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_UserId",
+                table: "UserRole",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -212,7 +231,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 name: "CartItem");
 
             migrationBuilder.DropTable(
-                name: "RoleUser");
+                name: "UserRole");
 
             migrationBuilder.DropTable(
                 name: "Role");

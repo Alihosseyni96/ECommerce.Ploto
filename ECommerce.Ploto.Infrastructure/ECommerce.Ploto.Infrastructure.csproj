@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ECommerce.Ploto.Domain\ECommerce.Ploto.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

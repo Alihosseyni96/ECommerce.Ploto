@@ -1,4 +1,6 @@
-﻿using ECommerce.Ploto.Application.Commands.User.RegisterUserCommand;
+﻿using ECommerce.Ploto.Application.Commands.User.AssignRoleCommand;
+using ECommerce.Ploto.Application.Commands.User.LoginUserCookieBaseCommand;
+using ECommerce.Ploto.Application.Commands.User.RegisterUserCommand;
 using ECommerce.Ploto.Application.Commands.User.UpsertUserAvater;
 using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
 using ECommerce.Ploto.Common.Dommin.Base;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Runtime.InteropServices;
 
 namespace ECommerce.Ploto.WebAPI.Controllers.User
@@ -28,7 +31,8 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [Route("users")]
         public async Task<FilteredResult> Users([FromQuery] GetUsersQuery query)
         {
-            return await _mediator.Send(new GetUsersQuery());
+            var res = await _mediator.Send(new GetUsersQuery());
+            return res;
         }
 
         [HttpPost]
@@ -47,5 +51,22 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
             await _mediator.Send(command);
             return Created();
         }
+
+        [HttpPost]
+        [Route("login-cookie-base-auth")]
+        public async Task<IActionResult> LoginCookieBase([FromBody]LoginUserCookieBaseCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("assign-role")]
+        //[Authorize(Roles = "Admin")]
+        public async Task AssignRole([FromBody]AssignRoleCommand command)
+        {
+            await _mediator.Send(command);
+        }
+
     }
 }

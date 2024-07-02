@@ -162,12 +162,12 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7c75ea36-6235-441f-88f0-8c8ae56ef651"),
+                            Id = new Guid("6cc22f35-2d3f-4c85-8fdf-2577b330061e"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("c82d28b9-7d98-4d43-9270-adedf4d2c945"),
+                            Id = new Guid("5ac02057-eb37-4eb6-9094-d2a12ae4bee7"),
                             Name = "user"
                         });
                 });
@@ -210,19 +210,31 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.UserRole.UserRole", b =>
                 {
-                    b.Property<Guid>("RolesId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("Createdby")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("RolesId", "UserId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RoleUser");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.ProductImage", b =>
@@ -423,19 +435,23 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.UserRole.UserRole", b =>
                 {
-                    b.HasOne("ECommerce.Ploto.Domain.Models.Role.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("ECommerce.Ploto.Domain.Models.Role.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Ploto.Domain.Models.User.User", null)
-                        .WithMany()
+                    b.HasOne("ECommerce.Ploto.Domain.Models.User.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.ProductImage", b =>
@@ -462,6 +478,16 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Role.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("ECommerce.Ploto.Domain.Models.User.User", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Image.UserAvaterImage", b =>

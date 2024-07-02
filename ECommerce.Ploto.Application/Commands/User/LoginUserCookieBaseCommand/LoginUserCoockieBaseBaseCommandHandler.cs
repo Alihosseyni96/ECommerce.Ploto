@@ -4,6 +4,8 @@ using MediatR;
 using ECommerce.Ploto.Common.Extensions;
 using ECommerce.Ploto.Application.Commands.User.LoginUserCookieBaseCommand.Exception;
 using ECommerce.Ploto.Common.AuthenticationAbstraction.CookieBaseAuthenticationImpelimentation;
+using ECommerce.Ploto.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Ploto.Application.Commands.User.LoginUserCookieBaseCommand;
 
@@ -12,6 +14,7 @@ public class LoginUserCoockieBaseBaseCommandHandler : IRequestHandler<LoginUserC
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly ICookieBaseAuthenticationService _cookieBaseAuthService;
+    private readonly ApplicationDbContext _db;
 
     public LoginUserCoockieBaseBaseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ICookieBaseAuthenticationService cookieBaseAuthService)
     {
@@ -28,7 +31,8 @@ public class LoginUserCoockieBaseBaseCommandHandler : IRequestHandler<LoginUserC
             .SingleOrDefaultAsync(
             predicate: u=> u.PhoneNumber == request.phoneNumber && u.Password == hashPass,
             ct: cancellationToken,
-            include : u=> u.Roles);
+            include : u=> u.UserRoles);
+
 
         IfUserNotFound();
         await LoginUser();
@@ -44,7 +48,8 @@ public class LoginUserCoockieBaseBaseCommandHandler : IRequestHandler<LoginUserC
         }
         async Task LoginUser()
         {
-            var roel = user.Roles
+            var roel = user.UserRoles
+                .Select(ur=> ur.Role)
                 ?.SingleOrDefault()
                 ?.Name;
 

@@ -17,11 +17,20 @@ public class RoleConfigurations : IEntityTypeConfiguration<Role>
             .HasMaxLength(50)
             .IsRequired();
 
+        builder.HasMany(r => r.UserRoles)
+            .WithOne(ur => ur.Role)
+            .HasForeignKey(ur => ur.RoleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        #region Seed Data
         builder.HasData(
 
-            Role.Create(Guid.NewGuid(), "Admin"),
-            Role.Create(Guid.NewGuid(), "user")
-            );
+    Role.Create(Guid.NewGuid(), "Admin"),
+    Role.Create(Guid.NewGuid(), "user")
+    );
+
+
+        #endregion
 
     }
 }
