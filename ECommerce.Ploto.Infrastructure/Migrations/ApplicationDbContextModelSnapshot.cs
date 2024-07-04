@@ -162,12 +162,12 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6cc22f35-2d3f-4c85-8fdf-2577b330061e"),
+                            Id = new Guid("f08779b4-dc87-4f2a-a28d-dc3b77ca0d11"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("5ac02057-eb37-4eb6-9094-d2a12ae4bee7"),
+                            Id = new Guid("9f96c100-7a50-4edb-b474-d15ba18ff145"),
                             Name = "user"
                         });
                 });
@@ -352,18 +352,15 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                             b1.Property<string>("Avenue")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)")
-                                .HasColumnName("avenue");
+                                .HasColumnType("character varying(50)");
 
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("city");
+                                .HasColumnType("character varying(20)");
 
                             b1.Property<int>("HouseNO")
-                                .HasColumnType("integer")
-                                .HasColumnName("house_no");
+                                .HasColumnType("integer");
 
                             b1.HasKey("UserId");
 
@@ -381,14 +378,12 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                             b1.Property<string>("CityCode")
                                 .IsRequired()
                                 .HasMaxLength(3)
-                                .HasColumnType("character varying(3)")
-                                .HasColumnName("city_code");
+                                .HasColumnType("character varying(3)");
 
                             b1.Property<string>("Number")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)")
-                                .HasColumnName("home_number");
+                                .HasColumnType("character varying(50)");
 
                             b1.HasKey("UserId");
 
@@ -406,8 +401,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                             b1.Property<string>("FirtsName")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)")
-                                .HasColumnName("first_name");
+                                .HasColumnType("character varying(50)");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()

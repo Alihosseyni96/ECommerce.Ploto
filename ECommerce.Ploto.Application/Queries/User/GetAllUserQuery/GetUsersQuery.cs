@@ -8,7 +8,5 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
 {
-    public record GetUsersQuery : BaseQueryFilter , IRequest<FilteredResult> 
-    {
-    }
+    public record GetUsersQuery : BaseQueryFilter , IRequest<FilteredResult>;
 }

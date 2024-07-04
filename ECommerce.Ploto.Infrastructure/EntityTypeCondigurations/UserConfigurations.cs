@@ -25,20 +25,20 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
             {
                 nameBuilder.Property(x => x.FirtsName)
                 .HasMaxLength(50)
-                .IsRequired()
-                .HasColumnName("first_name");
+                .IsRequired();
+                //.HasColumnName("first_name");
             });
 
             builder.OwnsOne(u => u.HomeNumber, homeNumberBuilder =>
             {
                 homeNumberBuilder.Property(n=> n.Number)
                 .HasMaxLength (50)
-                .HasColumnName("home_number")
+                //.HasColumnName("home_number")
                 .IsRequired();
 
                 homeNumberBuilder.Property(n=> n.CityCode)
                 .HasMaxLength(3)
-                .HasColumnName("city_code")
+                //.HasColumnName("city_code")
                 .IsRequired();  
             });
 
@@ -46,16 +46,16 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
             {
                 addressBuilder.Property(ad=> ad.City)
                 .HasMaxLength(20)
-                .HasColumnName("city")
+                //.HasColumnName("city")
                 .IsRequired();
 
                 addressBuilder.Property(ad=> ad.Avenue)
                 .HasMaxLength(50)
-                .HasColumnName("avenue")
+                //.HasColumnName("avenue")
                 .IsRequired ();
 
                 addressBuilder.Property(ad=> ad.HouseNO)
-                .HasColumnName("house_no")
+                //.HasColumnName("house_no")
                 .IsRequired();
             });
 

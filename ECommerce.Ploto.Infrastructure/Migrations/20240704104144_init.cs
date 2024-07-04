@@ -120,15 +120,15 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name_FirtsName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Name_LastName = table.Column<string>(type: "text", nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    home_number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    city_code = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
-                    city = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    avenue = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    house_no = table.Column<int>(type: "integer", nullable: false),
+                    HomeNumber_Number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    HomeNumber_CityCode = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
+                    Address_City = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Address_Avenue = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Address_HouseNO = table.Column<int>(type: "integer", nullable: false),
                     CartId = table.Column<Guid>(type: "uuid", nullable: true),
                     AvatarId = table.Column<Guid>(type: "uuid", nullable: true),
                     Createdby = table.Column<Guid>(type: "uuid", nullable: true),
@@ -182,8 +182,8 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 columns: new[] { "Id", "CreateAt", "Createdby", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("5ac02057-eb37-4eb6-9094-d2a12ae4bee7"), null, null, "user" },
-                    { new Guid("6cc22f35-2d3f-4c85-8fdf-2577b330061e"), null, null, "Admin" }
+                    { new Guid("9f96c100-7a50-4edb-b474-d15ba18ff145"), null, null, "user" },
+                    { new Guid("f08779b4-dc87-4f2a-a28d-dc3b77ca0d11"), null, null, "Admin" }
                 });
 
             migrationBuilder.CreateIndex(
