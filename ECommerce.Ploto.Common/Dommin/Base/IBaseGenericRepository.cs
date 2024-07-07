@@ -14,7 +14,7 @@ namespace ECommerce.Ploto.Common.Dommin.Base
         Task AddAsync(T entity, CancellationToken ct = default);
         Task DeleteAsync(T entity);
         Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params Expression<Func<T, object>>[]? include);
-        Task<FilteredResult> FindByFilterPaginatedAsync(
+        Task<FilteredResult<T>> FindByFilterPaginatedAsync(
             CancellationToken ct = default,
             BaseQueryFilter? filter = null,
             params string[]? includeThenIncludes);

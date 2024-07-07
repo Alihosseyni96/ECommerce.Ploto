@@ -67,7 +67,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 
         }
 
-        public async Task<FilteredResult> FindByFilterPaginatedAsync(CancellationToken ct = default, BaseQueryFilter? filter = null, params string[]? includeThenIncludes)
+        public async Task<FilteredResult<T>> FindByFilterPaginatedAsync(CancellationToken ct = default, BaseQueryFilter? filter = null, params string[]? includeThenIncludes)
         {
             IQueryable<T> query = _dbSet;
 
@@ -206,7 +206,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
                 query = query.Skip(skipAmount).Take(filter.PageSize);
                 int totalCount = await query.CountAsync(ct);
                 int totalPages = (int)Math.Ceiling(totalCount / (double)filter.PageSize);
-                return new FilteredResult()
+                return new FilteredResult<T>()
                 {
                     Data = await query.ToListAsync(ct),
                     CurrenPage = filter.PageNumber,
@@ -217,7 +217,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 
 
 
-            return new FilteredResult() { Data = await query.ToListAsync(ct) };
+            return new FilteredResult<T>() { Data = await query.ToListAsync(ct) };
 
 
         }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
 {
-    internal class UserDto
+    public class UserDto
     {
-        public string FullName { get; protected set; }
-        public string PhoneNumber { get; protected set; }
-        public string HomeNumber { get; protected set; }
-        public string Address { get; protected set; }
+        public string FullName { get;  set; }
+        public string PhoneNumber { get;  set; }
+        public string HomeNumber { get;  set; }
+        public string Address { get;  set; }
         //public string[]? Roles { get; set; }
 
     }
