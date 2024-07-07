@@ -31,8 +31,8 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [Route("users")]
         public async Task<FilteredResult<UserDto>> Users([FromQuery] GetUsersQuery query)
         {
-            var res =  await _mediator.Send(query);
-            return res;
+             return await _mediator.Send(query);
+            
         }
 
         [HttpPost]

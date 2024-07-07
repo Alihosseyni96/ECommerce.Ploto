@@ -24,23 +24,16 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
         public async Task<FilteredResult<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _unitOfWork
-                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request,"UserRoles");
+                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request,"UserRoles.Role");
 
-            //users.Data = _mapper.Map<List<UserDto>>(users);
-            //return users;
             return new FilteredResult<UserDto>()
             {
                 CurrenPage = users.CurrenPage,
                 TotalPage = users.TotalPage,
-                //Data = _mapper.Map<List<UserDto>>(users)  
-                Data = users.Data.Select(x => new UserDto()
-                {
-                    FullName = $"{x.Name.FirtsName}{x.Name.LastName}",
-                    Address = $"{x.Address.City}-{x.Address.City}-{x.Address.Avenue}",
-                    HomeNumber = $"{x.HomeNumber.CityCode}-{x.HomeNumber.Number}",
-                    PhoneNumber = x.PhoneNumber
-                })
+                Data = _mapper.Map<List<UserDto>>(users.Data)
             };
         }
     }
+
+
 }

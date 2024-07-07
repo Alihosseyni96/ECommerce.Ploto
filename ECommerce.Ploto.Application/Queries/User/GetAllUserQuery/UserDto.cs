@@ -13,7 +13,7 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
         public string PhoneNumber { get;  set; }
         public string HomeNumber { get;  set; }
         public string Address { get;  set; }
-        //public string[]? Roles { get; set; }
+        public string[]? Roles { get; set; }
 
     }
 }
