@@ -5,6 +5,7 @@ using ECommerce.Ploto.Domain.Models.User;
 using ECommerce.Ploto.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using StackExchange.Redis;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 
         }
 
-        public async Task<FilteredResult> FindByFilterPaginatedAsync(CancellationToken ct = default, BaseQueryFilter? filter = null)
+        public async Task<FilteredResult> FindByFilterPaginatedAsync(CancellationToken ct = default, BaseQueryFilter? filter = null, params string[]? includeThenIncludes)
         {
             IQueryable<T> query = _dbSet;
 
@@ -190,6 +191,17 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
                         : query.OrderByPropertyDescending(filter.SortBy);
                 }
 
+
+                if (includeThenIncludes is not null)
+                {
+                    foreach (var includeThenInclude in includeThenIncludes)
+                    {
+
+                        query = query.Include(includeThenInclude);
+                    }
+                }
+
+
                 int skipAmount = (filter.PageNumber - 1) * filter.PageSize;
                 query = query.Skip(skipAmount).Take(filter.PageSize);
                 int totalCount = await query.CountAsync(ct);
@@ -221,7 +233,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 
         }
 
-        public async Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params Expression<Func<T, object>>[]? include)
+        public async Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params Expression<Func<T, object>>[]? include )
         {
             IQueryable<T> query = _dbSet;
 
@@ -234,6 +246,23 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
             }
 
             return await query.SingleOrDefaultAsync(predicate, ct);
+        }
+
+        public async Task<T> SingleOrDdfaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params string[]? includeThenIncludes )
+        {
+            IQueryable<T> query = _dbSet;
+
+            if(includeThenIncludes is not null)
+            {
+                foreach (var includeThenInclude in includeThenIncludes)
+                {
+
+                    query = query.Include(includeThenInclude);
+                }
+            }
+            return await query.SingleOrDefaultAsync(predicate, ct);
+
+
         }
 
 

@@ -16,7 +16,8 @@ namespace ECommerce.Ploto.Common.Dommin.Base
         Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params Expression<Func<T, object>>[]? include);
         Task<FilteredResult> FindByFilterPaginatedAsync(
             CancellationToken ct = default,
-            BaseQueryFilter? filter = null);
+            BaseQueryFilter? filter = null,
+            params string[]? includeThenIncludes);
 
         Task<IEnumerable<T>> FindAsync(
             CancellationToken cancellationToken = default,
@@ -24,5 +25,7 @@ namespace ECommerce.Ploto.Common.Dommin.Base
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             params Expression<Func<T, object>>[] include );
 
+
+        Task<T> SingleOrDdfaultAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default, params string[]? includeThenIncludes);
     }
 }

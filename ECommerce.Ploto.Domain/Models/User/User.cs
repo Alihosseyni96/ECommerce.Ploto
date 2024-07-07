@@ -55,7 +55,7 @@ namespace ECommerce.Ploto.Domain.Models.User
         /// <param name="phoneNumber"></param>
         /// <param name="homeNumber"></param>
         /// <param name="address"></param>
-        private User(Name name, string phoneNumber, string password ,HomeNumber homeNumber, Address address)
+        private User(Name name, string phoneNumber, string password, HomeNumber homeNumber, Address address)
         {
             Name = name;
             Password = password.ComputeSha256Hash();
@@ -71,7 +71,7 @@ namespace ECommerce.Ploto.Domain.Models.User
         /// <param name="phoneNumber"></param>
         /// <param name="homeNumber"></param>
         /// <param name="address"></param>
-        private User(Guid id, Name name, string phoneNumber, string password , HomeNumber homeNumber, Address address)
+        private User(Guid id, Name name, string phoneNumber, string password, HomeNumber homeNumber, Address address)
         {
             Id = id;
             Name = name;
@@ -84,7 +84,7 @@ namespace ECommerce.Ploto.Domain.Models.User
 
         #endregion
 
-        public static User Create(Name name, string phoneNumber, string password ,HomeNumber homeNumber, Address address)
+        public static User Create(Name name, string phoneNumber, string password, HomeNumber homeNumber, Address address)
         {
             return new User(name, phoneNumber, password, homeNumber, address);
         }
@@ -98,9 +98,9 @@ namespace ECommerce.Ploto.Domain.Models.User
         /// <param name="homeNumber"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        public static User Create(Guid id,Name name, string phoneNumber, string password ,HomeNumber homeNumber, Address address)
+        public static User Create(Guid id, Name name, string phoneNumber, string password, HomeNumber homeNumber, Address address)
         {
-            return new User(id,name, phoneNumber, password, homeNumber, address);
+            return new User(id, name, phoneNumber, password, homeNumber, address);
         }
 
         public void Update(User user)
@@ -131,7 +131,14 @@ namespace ECommerce.Ploto.Domain.Models.User
             Avatar!.Update(file);
         }
 
-        public void AddRole(Role.Role[] systemRoles ,Role.Role[]? existedRoles = null, params Role.Role[] newRoles)
+        private void AddUserRole(Role.Role role)
+        {
+
+            _userRoles!.Add(UserRole.UserRole.Create(this, role));
+
+        }
+
+        public void AddRole(Role.Role[] systemRoles, Role.Role[]? existedRoles = null, params Role.Role[] newRoles)
         {
             if (_userRoles is null)
             {
@@ -142,9 +149,12 @@ namespace ECommerce.Ploto.Domain.Models.User
 
             foreach (Role.Role role in toAdd)
             {
-                var isValidRole = systemRoles.Select(x=> x.Name).Contains(role.Name);
-                if(isValidRole)
-                    _userRoles.Add(UserRole.UserRole.Create(this.Id , role.Id));
+                var isRoleValid = systemRoles.Contains(role);
+                if (isRoleValid)
+                {
+                    this.AddUserRole(role);
+
+                }
 
             }
         }

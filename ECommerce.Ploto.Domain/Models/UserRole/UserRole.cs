@@ -27,9 +27,15 @@ namespace ECommerce.Ploto.Domain.Models.UserRole
             RoleId = roleId;
         }
 
-        public static UserRole Create(Guid userId, Guid roleId)
+        public UserRole(User.User user, Role.Role role)
         {
-            return new UserRole(userId, roleId);
+            User = user;
+            Role = role;
+        }
+
+        public static UserRole Create(User.User user , Role.Role role)
+        {
+            return new UserRole(user, role);
         }
     }
 }

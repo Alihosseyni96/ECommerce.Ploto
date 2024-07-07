@@ -24,8 +24,9 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
         public async Task<FilteredResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _unitOfWork
-                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request);
+                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request,"UserRoles");
 
+            users.Data = _mapper.Map<List<UserDto>>(users);
             return users;
         }
     }

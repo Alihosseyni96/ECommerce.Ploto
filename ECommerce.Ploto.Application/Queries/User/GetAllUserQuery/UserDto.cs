@@ -12,7 +12,8 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
         public string FullName { get; protected set; }
         public string PhoneNumber { get; protected set; }
         public string HomeNumber { get; protected set; }
-        public Address Address { get; protected set; }
+        public string Address { get; protected set; }
+        //public string[]? Roles { get; set; }
 
     }
 }

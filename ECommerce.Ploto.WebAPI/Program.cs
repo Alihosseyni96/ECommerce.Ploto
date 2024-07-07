@@ -29,8 +29,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;Database=ploto2;Username=pourya;Password=123456;Port=5432");
-    //options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+    //options.UseNpgsql("Host=localhost;Database=ploto2;Username=pourya;Password=123456;Port=5432");
+    options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 });
 
 #region Cache Abstraction

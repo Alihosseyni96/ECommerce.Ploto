@@ -2,7 +2,9 @@
 using ECommerce.Ploto.Application.Commands.User.AssignRoleCommand.Exception;
 using ECommerce.Ploto.Domain.Models.Role;
 using ECommerce.Ploto.Domain.UnitOfWork;
+using ECommerce.Ploto.Infrastructure.Context;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,19 +33,25 @@ namespace ECommerce.Ploto.Application.Commands.User.AssignRoleCommand
                 .Where(x=> request.roleIds.Contains(x.Id))
                 .ToArray();
 
+
+
             var user = await _unitOfWork.UserRepository
-                .SingleOrDefaultAsync(
-                predicate: u => u.Id == request.userId,
+                .SingleOrDdfaultAsync(
+                predicate :  x => x.Id == request.userId,
                 ct: cancellationToken,
-                include: u => u.UserRoles.Select(ur=> ur.Role));
+                includeThenIncludes: "UserRoles.Role");
+
+
+            var userEixtedRole = user!.UserRoles?
+                .Select(ur=> ur.Role)
+                .ToArray();   
 
             UserNotFoundCheck();
 
 
-            user.AddRole( user?.UserRoles.Select(ur=> ur.Role)?.ToArray() ?? null, roleToAdd);
+            user!.AddRole(systemRoles.ToArray(), userEixtedRole, roleToAdd);
 
-            await _unitOfWork.SaveChangeAsync(cancellationToken);
-
+                await _unitOfWork.SaveChangeAsync(cancellationToken);
 
 
 

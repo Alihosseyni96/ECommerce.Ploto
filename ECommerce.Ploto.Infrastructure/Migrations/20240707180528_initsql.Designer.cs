@@ -3,17 +3,17 @@ using System;
 using ECommerce.Ploto.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace ECommerce.Ploto.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240704104144_init")]
-    partial class init
+    [Migration("20240707180528_initsql")]
+    partial class initsql
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,27 +21,27 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.6")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Cart.Cart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -52,22 +52,22 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CartId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Count")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -82,26 +82,26 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(21)
-                        .HasColumnType("character varying(21)");
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<byte[]>("File")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -116,26 +116,26 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Color")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(70)
-                        .HasColumnType("character varying(70)");
+                        .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
 
@@ -145,18 +145,18 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
             modelBuilder.Entity("ECommerce.Ploto.Domain.Models.Role.Role", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -165,12 +165,12 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f08779b4-dc87-4f2a-a28d-dc3b77ca0d11"),
+                            Id = new Guid("a1144093-0897-4f28-8369-19f40ab5978f"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("9f96c100-7a50-4edb-b474-d15ba18ff145"),
+                            Id = new Guid("73678e28-3840-42af-9c25-6202f92d772d"),
                             Name = "user"
                         });
                 });
@@ -179,36 +179,38 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("AvatarId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CartId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AvatarId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AvatarId] IS NOT NULL");
 
                     b.HasIndex("CartId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CartId] IS NOT NULL");
 
                     b.ToTable("User");
                 });
@@ -217,19 +219,19 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("Createdby")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -245,7 +247,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.HasBaseType("ECommerce.Ploto.Domain.Models.Image.Image");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("ProductId");
 
@@ -257,7 +259,7 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.HasBaseType("ECommerce.Ploto.Domain.Models.Image.Image");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasDiscriminator().HasValue("UserAvaterImage");
                 });
@@ -286,18 +288,18 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.OwnsOne("ECommerce.Ploto.Domain.Models.Product.ValueObject.Dimensions", "Dimensions", b1 =>
                         {
                             b1.Property<Guid>("ProductId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<double>("Height")
-                                .HasColumnType("double precision")
+                                .HasColumnType("float")
                                 .HasColumnName("dimension_height");
 
                             b1.Property<double>("Length")
-                                .HasColumnType("double precision")
+                                .HasColumnType("float")
                                 .HasColumnName("dimension_length");
 
                             b1.Property<double>("Width")
-                                .HasColumnType("double precision")
+                                .HasColumnType("float")
                                 .HasColumnName("dimension_width");
 
                             b1.HasKey("ProductId");
@@ -311,15 +313,15 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.OwnsOne("ECommerce.Ploto.Domain.Models.Product.ValueObject.Money", "Price", b1 =>
                         {
                             b1.Property<Guid>("ProductId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<decimal>("Amount")
-                                .HasColumnType("numeric");
+                                .HasColumnType("decimal(18,2)");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("character varying(10)");
+                                .HasColumnType("nvarchar(10)");
 
                             b1.HasKey("ProductId");
 
@@ -350,20 +352,20 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.OwnsOne("ECommerce.Ploto.Domain.Models.User.ValueObject.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Avenue")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasColumnType("nvarchar(50)");
 
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("character varying(20)");
+                                .HasColumnType("nvarchar(20)");
 
                             b1.Property<int>("HouseNO")
-                                .HasColumnType("integer");
+                                .HasColumnType("int");
 
                             b1.HasKey("UserId");
 
@@ -376,17 +378,17 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.OwnsOne("ECommerce.Ploto.Domain.Models.User.ValueObject.HomeNumber", "HomeNumber", b1 =>
                         {
                             b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("CityCode")
                                 .IsRequired()
                                 .HasMaxLength(3)
-                                .HasColumnType("character varying(3)");
+                                .HasColumnType("nvarchar(3)");
 
                             b1.Property<string>("Number")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasColumnType("nvarchar(50)");
 
                             b1.HasKey("UserId");
 
@@ -399,16 +401,16 @@ namespace ECommerce.Ploto.Infrastructure.Migrations
                     b.OwnsOne("ECommerce.Ploto.Domain.Models.User.ValueObject.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("FirtsName")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasColumnType("nvarchar(50)");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("UserId");
 
