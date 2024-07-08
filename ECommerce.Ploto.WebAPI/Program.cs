@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Ploto.Common.CacheAbstraction.Configurations;
 using ECommerce.Ploto.Common.AuthenticationAbstraction.Configuration;
 using System.Drawing;
+using Microsoft.AspNetCore.Diagnostics;
+using ECommerce.Ploto.WebAPI.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -32,6 +34,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     //options.UseNpgsql("Host=localhost;Database=ploto2;Username=pourya;Password=123456;Port=5432");
     options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 });
+//builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
 #region Cache Abstraction
 
@@ -103,6 +106,8 @@ app.AuthorizationAbstraction(options =>
     //options.UseAuthorizatio();
 });
 #endregion
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
 
