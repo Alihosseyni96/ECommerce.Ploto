@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace ECommerce.Ploto.Common.AuthenticationAbstraction.TokenBaseAuthenticati
     /// </summary>
     public interface ITokenBaseAuthenticationService
     {
-        
+        string GenerateToken(params (string claimKey, string claimValue)[] addCleims);
+        ClaimsPrincipal ValidateJwtToken(string token);
     }
 }

@@ -45,11 +45,6 @@ public class RedisCacheService : ICacheService
         }
 
         return JsonConvert.DeserializeObject<T>(cacheValue);
-
-
-
-
-
     }
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? expiry = null, CancellationToken cancellationToken = default)
