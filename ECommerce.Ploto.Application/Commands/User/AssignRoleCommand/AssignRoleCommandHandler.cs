@@ -26,35 +26,22 @@ namespace ECommerce.Ploto.Application.Commands.User.AssignRoleCommand
 
         public async Task Handle(AssignRoleCommand request, CancellationToken cancellationToken)
         {
-            var systemRoles = await _unitOfWork.RoleRepository
-                .GetAllAsync(cancellationToken);
-
-            var roleToAdd = systemRoles
-                .Where(x=> request.roleIds.Contains(x.Id))
-                .ToArray();
-
-
-
             var user = await _unitOfWork.UserRepository
                 .SingleOrDdfaultAsync(
-                predicate :  x => x.Id == request.userId,
+                predicate: x => x.Id == request.userId,
                 ct: cancellationToken,
-                includeThenIncludes: "UserRoles.Role");
-
-
-            var userEixtedRole = user!.UserRoles?
-                .Select(ur=> ur.Role)
-                .ToArray();   
+                includeThenIncludes: "Role");
 
             UserNotFoundCheck();
 
 
-            user!.AddRole(systemRoles.ToArray(), userEixtedRole, roleToAdd);
+            user!.AddRole(user.Role);
 
-                await _unitOfWork.SaveChangeAsync(cancellationToken);
+            await _unitOfWork.SaveChangeAsync(cancellationToken);
 
 
 
+            //local Function
             void UserNotFoundCheck()
             {
                 if (user is null)

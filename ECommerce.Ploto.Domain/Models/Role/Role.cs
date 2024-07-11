@@ -12,13 +12,7 @@ namespace ECommerce.Ploto.Domain.Models.Role
     public class Role : BaseEntity, IAggregateRoot
     {
         public string Name { get; private set; }
-        private List<UserRole.UserRole>? _userRoles;
 
-
-        /// <summary>
-        /// backing Feild
-        /// </summary>
-        public IReadOnlyCollection<UserRole.UserRole>? UserRoles => _userRoles?.AsReadOnly();
 
 
         private Role(Guid id , string name)

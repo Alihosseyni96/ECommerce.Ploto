@@ -4,7 +4,6 @@ using ECommerce.Ploto.Domain.Models.Cart;
 using ECommerce.Ploto.Domain.Models.Image;
 using ECommerce.Ploto.Domain.Models.Role;
 using ECommerce.Ploto.Domain.Models.User.ValueObject;
-using ECommerce.Ploto.Domain.Models.UserRole;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,21 +21,18 @@ namespace ECommerce.Ploto.Domain.Models.User
     {
         public Name Name { get; protected set; }
         public string PhoneNumber { get; protected set; }
-        public string Password { get; set; }
+        public string Password { get; protected set; }
         public HomeNumber HomeNumber { get; protected set; }
         public Address Address { get; protected set; }
         public Cart.Cart? Cart { get; protected set; }
-        public Guid? CartId { get; set; }
+        public Guid? CartId { get; protected set; }
 
         public Guid? AvatarId { get; protected set; }
         public Image.UserAvaterImage? Avatar { get; protected set; }
-        private List<UserRole.UserRole>? _userRoles;
 
+        public Guid RoleId { get; protected set; }
+        public Role.Role Role { get; protected set; }
 
-        /// <summary>
-        /// backing Feild
-        /// </summary>
-        public IReadOnlyCollection<UserRole.UserRole>? UserRoles => _userRoles?.AsReadOnly();
 
 
         #region Constructors
@@ -131,32 +127,15 @@ namespace ECommerce.Ploto.Domain.Models.User
             Avatar!.Update(file);
         }
 
-        private void AddUserRole(Role.Role role)
+
+        public void AddRole(Role.Role role)
         {
-
-            _userRoles!.Add(UserRole.UserRole.Create(this, role));
-
-        }
-
-        public void AddRole(Role.Role[] systemRoles, Role.Role[]? existedRoles = null, params Role.Role[] newRoles)
-        {
-            if (_userRoles is null)
+            if(this.RoleId == role.Id)
             {
-                _userRoles = new List<UserRole.UserRole>();
+                return;
             }
-            var toAdd = newRoles.Except(existedRoles).ToArray();
 
-
-            foreach (Role.Role role in toAdd)
-            {
-                var isRoleValid = systemRoles.Contains(role);
-                if (isRoleValid)
-                {
-                    this.AddUserRole(role);
-
-                }
-
-            }
+            this.Role = role;
         }
 
 

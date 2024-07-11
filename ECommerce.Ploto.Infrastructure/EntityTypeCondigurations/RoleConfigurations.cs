@@ -17,10 +17,6 @@ public class RoleConfigurations : IEntityTypeConfiguration<Role>
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.HasMany(r => r.UserRoles)
-            .WithOne(ur => ur.Role)
-            .HasForeignKey(ur => ur.RoleId)
-            .OnDelete(DeleteBehavior.Cascade);
 
         #region Seed Data
         builder.HasData(

@@ -68,10 +68,6 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
                 .HasForeignKey<User>(u => u.AvatarId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(u => u.UserRoles)
-                .WithOne(ur => ur.User)
-                .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
