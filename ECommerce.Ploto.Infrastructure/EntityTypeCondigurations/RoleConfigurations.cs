@@ -1,4 +1,4 @@
-﻿using ECommerce.Ploto.Domain.Models.Role;
+﻿using ECommerce.Ploto.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,19 +10,21 @@ public class RoleConfigurations : IEntityTypeConfiguration<Role>
     {
         builder.HasKey(r => r.Id);
 
-        builder.Property(r => r.Id)
-            .ValueGeneratedNever();
 
         builder.Property(r => r.Name)
             .HasMaxLength(50)
             .IsRequired();
 
+        builder.HasMany(r => r.RolePermissions)
+            .WithOne(rp => rp.Role)
+            .HasForeignKey(rp => rp.RoleId)
+            .IsRequired();
 
         #region Seed Data
         builder.HasData(
 
-    Role.Create(Guid.NewGuid(), "Admin"),
-    Role.Create(Guid.NewGuid(), "user")
+    //Role.Create(Guid.NewGuid(), "Admin"),
+    //Role.Create(Guid.NewGuid(), "user")
     );
 
 

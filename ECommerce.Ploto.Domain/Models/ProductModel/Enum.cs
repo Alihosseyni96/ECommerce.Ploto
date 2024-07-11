@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Ploto.Domain.Models.Product
+namespace ECommerce.Ploto.Domain.Models
 {
     public enum Color
     {

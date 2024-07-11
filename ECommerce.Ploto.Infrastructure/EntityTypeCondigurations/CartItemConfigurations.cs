@@ -1,4 +1,4 @@
-﻿using ECommerce.Ploto.Domain.Models.CartItem;
+﻿using ECommerce.Ploto.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

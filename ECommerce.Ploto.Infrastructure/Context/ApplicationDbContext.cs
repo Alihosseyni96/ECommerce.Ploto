@@ -43,7 +43,7 @@ namespace ECommerce.Ploto.Infrastructure.Context
         private async Task PublishDomainEvents()
         {
             var entitiesWithDomainEvens =
-                this.ChangeTracker.Entries<BaseEntity>()
+                this.ChangeTracker.Entries<BaseEntity<Guid>>()
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
 
 

@@ -1,12 +1,5 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
-using ECommerce.Ploto.Domain.IRepositories.Product;
-using ECommerce.Ploto.Domain.IRepositories.Role;
-using ECommerce.Ploto.Domain.IRepositories.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Ploto.Domain.IRepositories;
 
 namespace ECommerce.Ploto.Domain.UnitOfWork
 {

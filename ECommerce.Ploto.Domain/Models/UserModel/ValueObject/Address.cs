@@ -1,6 +1,6 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 
-namespace ECommerce.Ploto.Domain.Models.User.ValueObject;
+namespace ECommerce.Ploto.Domain.Models;
 
 public class Address : BaseValueObject
 {

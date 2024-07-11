@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ECommerce.Ploto.Common.Dommin.Base;
 
-namespace ECommerce.Ploto.Domain.Models.Product.ValueObject;
+namespace ECommerce.Ploto.Domain.Models;
 
 public class Dimensions : BaseValueObject
 {

@@ -1,15 +1,7 @@
 ﻿using AutoMapper;
 using ECommerce.Ploto.Application.Commands.User.AssignRoleCommand.Exception;
-using ECommerce.Ploto.Domain.Models.Role;
 using ECommerce.Ploto.Domain.UnitOfWork;
-using ECommerce.Ploto.Infrastructure.Context;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Application.Commands.User.AssignRoleCommand
 {

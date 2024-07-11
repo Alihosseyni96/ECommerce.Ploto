@@ -1,7 +1,7 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Domain.Exceptions;
 
-namespace ECommerce.Ploto.Domain.Models.User.ValueObject;
+namespace ECommerce.Ploto.Domain.Models;
 
 public class HomeNumber : BaseValueObject
 {

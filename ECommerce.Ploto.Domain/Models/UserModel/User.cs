@@ -1,23 +1,9 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Common.Extensions;
-using ECommerce.Ploto.Domain.Models.Cart;
-using ECommerce.Ploto.Domain.Models.Image;
-using ECommerce.Ploto.Domain.Models.Role;
-using ECommerce.Ploto.Domain.Models.User.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace ECommerce.Ploto.Domain.Models.User
+namespace ECommerce.Ploto.Domain.Models
 {
-    public class User : BaseEntity, IAggregateRoot
+    public class User : BaseEntity<Guid>, IAggregateRoot
     {
         public Name Name { get; protected set; }
         public string PhoneNumber { get; protected set; }
@@ -31,7 +17,7 @@ namespace ECommerce.Ploto.Domain.Models.User
         public Image.UserAvaterImage? Avatar { get; protected set; }
 
         public Guid RoleId { get; protected set; }
-        public Role.Role Role { get; protected set; }
+        public Role Role { get; protected set; }
 
 
 
@@ -128,7 +114,7 @@ namespace ECommerce.Ploto.Domain.Models.User
         }
 
 
-        public void AddRole(Role.Role role)
+        public void AddRole(Role role)
         {
             if(this.RoleId == role.Id)
             {

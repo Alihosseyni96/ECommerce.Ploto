@@ -1,14 +1,9 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
-using ECommerce.Ploto.Domain.Models.Product;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Ploto.Domain.Models;
 
-namespace ECommerce.Ploto.Domain.IRepositories.Product
+namespace ECommerce.Ploto.Domain.IRepositories
 {
-    public interface IProductRepository : IGenericRepository<Domain.Models.Product.Product>
+    public interface IProductRepository : IGenericRepository<Product>
     {
     }
 }

@@ -11,9 +11,9 @@ namespace ECommerce.Ploto.Common.Dommin.Base
     /// <summary>
     /// This is Abstract Class for entities
     /// </summary>
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TKey>
     {
-        public Guid Id { get; protected set; }
+        public TKey Id { get; protected set; }
 
         public Guid? Createdby { get; set; }
         public DateTimeOffset? CreateAt { get; set; }

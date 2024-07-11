@@ -1,18 +1,8 @@
-﻿using ECommerce.Ploto.Domain.IRepositories.Product;
-using ECommerce.Ploto.Domain.IRepositories.Role;
-using ECommerce.Ploto.Domain.IRepositories.User;
+﻿using ECommerce.Ploto.Domain.IRepositories;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
-using ECommerce.Ploto.Infrastructure.Repositories.Product;
-using ECommerce.Ploto.Infrastructure.Repositories.Role;
-using ECommerce.Ploto.Infrastructure.Repositories.User;
+using ECommerce.Ploto.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace ECommerce.Ploto.Infrastructure.UnitOfWork

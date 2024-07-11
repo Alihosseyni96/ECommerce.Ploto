@@ -1,14 +1,10 @@
-﻿using ECommerce.Ploto.Domain.IRepositories.Role;
+﻿using ECommerce.Ploto.Domain.IRepositories;
+using ECommerce.Ploto.Domain.Models;
 using ECommerce.Ploto.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ECommerce.Ploto.Infrastructure.Repositories.Role
+namespace ECommerce.Ploto.Infrastructure.Repositories
 {
-    public class RoleRepositopry : GenericRepository<Domain.Models.Role.Role> , IRoleRepository 
+    public class RoleRepositopry : GenericRepository<Role> , IRoleRepository 
     {
         public RoleRepositopry(ApplicationDbContext db):base(db)
         {

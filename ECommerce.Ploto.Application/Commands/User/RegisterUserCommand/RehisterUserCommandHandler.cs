@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
-using ECommerce.Ploto.Domain.Models.User;
-using ECommerce.Ploto.Domain.Models.User.ValueObject;
+using ECommerce.Ploto.Domain.Models;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
 {
@@ -24,7 +18,7 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
 
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = Domain.Models.User.User
+            var user = Domain.Models.User
                 .Create(Name.Create(request.FirtsName, request.LastName),
                 request.PhoneNumber,
                 request.Password,

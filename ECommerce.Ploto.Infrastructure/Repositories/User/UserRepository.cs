@@ -1,14 +1,10 @@
-﻿using ECommerce.Ploto.Domain.IRepositories.User;
+﻿using ECommerce.Ploto.Domain.IRepositories;
+using ECommerce.Ploto.Domain.Models;
 using ECommerce.Ploto.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ECommerce.Ploto.Infrastructure.Repositories.User
+namespace ECommerce.Ploto.Infrastructure.Repositories
 {
-    public  class UserRepository : GenericRepository<Domain.Models.User.User> , IUserRepository
+    public  class UserRepository : GenericRepository<User> , IUserRepository
     {
         public UserRepository(ApplicationDbContext db) : base(db)
         {

@@ -1,22 +1,9 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Common.Extensions;
 using ECommerce.Ploto.Domain.IRepositories;
-using ECommerce.Ploto.Domain.Models.User;
 using ECommerce.Ploto.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using StackExchange.Redis;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ECommerce.Ploto.Infrastructure.Repositories
 {

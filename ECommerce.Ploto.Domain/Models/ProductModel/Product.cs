@@ -1,15 +1,8 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
-using ECommerce.Ploto.Domain.Models.Image;
-using ECommerce.Ploto.Domain.Models.Product.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ECommerce.Ploto.Domain.Models.Product
+namespace ECommerce.Ploto.Domain.Models
 {
-    public class Product : BaseEntity , ITraceableEntity , IAggregateRoot
+    public class Product : BaseEntity<Guid> , ITraceableEntity , IAggregateRoot
     {
         public string Name { get; protected set; }
         public Color Color { get; protected set; }
@@ -22,7 +15,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// For Relations
         /// </summary>
         private readonly List<Image.ProductImage> _images;
-        private readonly List<CartItem.CartItem> _cartitems;
+        private readonly List<CartItem> _cartitems;
 
 
 
@@ -32,7 +25,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
         /// BAcking Feild  
         /// </summary>
         public IReadOnlyCollection<Image.ProductImage> Images => _images.AsReadOnly();
-        public IReadOnlyCollection<CartItem.CartItem> CartItems => _cartitems.AsReadOnly();
+        public IReadOnlyCollection<CartItem> CartItems => _cartitems.AsReadOnly();
 
         // Protected constructor for ORM
         protected Product()
@@ -49,7 +42,7 @@ namespace ECommerce.Ploto.Domain.Models.Product
             Price = price;
             Dimensions = dimensions;
             _images = new List<Image.ProductImage>();
-            _cartitems = new List<CartItem.CartItem>();
+            _cartitems = new List<CartItem>();
 
         }
 

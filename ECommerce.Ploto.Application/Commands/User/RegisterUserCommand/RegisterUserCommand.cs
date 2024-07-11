@@ -1,12 +1,4 @@
-﻿using ECommerce.Ploto.Domain.Models.Cart;
-using ECommerce.Ploto.Domain.Models.User.ValueObject;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
 {

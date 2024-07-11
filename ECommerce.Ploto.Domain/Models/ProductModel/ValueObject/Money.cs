@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Ploto.Domain.Models.Product.ValueObject
+namespace ECommerce.Ploto.Domain.Models
 {
     public class Money : BaseValueObject
     {

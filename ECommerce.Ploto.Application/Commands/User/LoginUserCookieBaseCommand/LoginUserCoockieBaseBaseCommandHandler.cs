@@ -30,12 +30,11 @@ public class LoginUserCoockieBaseBaseCommandHandler : IRequestHandler<LoginUserC
         var user = await _unitOfWork.UserRepository
             .SingleOrDefaultAsync(
             predicate: u=> u.PhoneNumber == request.phoneNumber && u.Password == hashPass,
-            ct: cancellationToken,
-            include : u=> u.UserRoles);
+            ct: cancellationToken);
 
 
         IfUserNotFound();
-        await LoginUser();
+        //await LoginUser();
 
 
 
@@ -46,17 +45,17 @@ public class LoginUserCoockieBaseBaseCommandHandler : IRequestHandler<LoginUserC
             if (user is null)
                 throw new UserNotFoundException();
         }
-        async Task LoginUser()
-        {
-            var roel = user.UserRoles
-                .Select(ur=> ur.Role)
-                ?.SingleOrDefault()
-                ?.Name;
+        //async Task LoginUser()
+        //{
+        //    var roel = user.UserRoles
+        //        .Select(ur=> ur.Role)
+        //        ?.SingleOrDefault()
+        //        ?.Name;
 
-           await  _cookieBaseAuthService.LoginAsync(
-                ("UserId",user.Id.ToString()),
-                ("Role", roel ?? string.Empty));
+        //   await  _cookieBaseAuthService.LoginAsync(
+        //        ("UserId",user.Id.ToString()),
+        //        ("Role", roel ?? string.Empty));
 
-        }
+        //}
     }
 }
