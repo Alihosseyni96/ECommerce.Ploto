@@ -27,6 +27,7 @@ namespace ECommerce.Ploto.Domain.Models
         private Role(string name)
         {
             Name = name;
+            this.Id = Guid.NewGuid();   
             _rolePermissions = new List<RolePermission>();
 
         }

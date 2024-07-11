@@ -1,4 +1,5 @@
 ﻿using ECommerce.Ploto.Common.Dommin.Base;
+using ECommerce.Ploto.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -23,6 +24,7 @@ namespace ECommerce.Ploto.Infrastructure.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
+            Seeder.Seed(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

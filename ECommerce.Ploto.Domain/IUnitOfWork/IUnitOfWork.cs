@@ -3,10 +3,11 @@ using ECommerce.Ploto.Domain.IRepositories;
 
 namespace ECommerce.Ploto.Domain.UnitOfWork
 {
-    public interface IUnitOfWork: IBaseUnitOfWork
+    public interface IUnitOfWork : IBaseUnitOfWork
     {
-         IUserRepository UserRepository { get; }   
-         IProductRepository ProductRepository { get;  }
-         IRoleRepository RoleRepository { get; }
+        IUserRepository UserRepository { get; }
+        IProductRepository ProductRepository { get; }
+        IRoleRepository RoleRepository { get; }
+        IPermissionRepository PermissionRepository { get; }
     }
 }

@@ -19,6 +19,8 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
         public IUserRepository UserRepository { get; set; }
         public IProductRepository ProductRepository { get; set; }
         public IRoleRepository RoleRepository { get; set; }
+        public IPermissionRepository PermissionRepository { get; set; }
+        
         public UnitOfWork(ApplicationDbContext db)
         {
             if (db == null) throw new ArgumentNullException(nameof(db));
@@ -30,6 +32,8 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
             if (ProductRepository == null) ProductRepository = new ProductRepository(db);
 
             if(RoleRepository == null) RoleRepository = new RoleRepositopry(db);    
+
+            if(PermissionRepository == null) PermissionRepository = new PermissionRepository(db);
         }
 
 

@@ -22,6 +22,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
                 .WithOne(rp => rp.Permission)
                 .HasForeignKey(rp => rp.PermissionId)
                 .IsRequired(false);
+
+            builder.HasData(
+                Permission.Create(PermissionType.UserPanelAccess),
+                Permission.Create(PermissionType.AdminPanelAccess));
         }
     }
+
 }
