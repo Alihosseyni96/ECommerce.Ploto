@@ -72,7 +72,7 @@ namespace ECommerce.Ploto.Domain.Models
         }
 
         /// <summary>
-        /// To Create int Seed 
+        /// To Create in Seed 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
@@ -122,6 +122,12 @@ namespace ECommerce.Ploto.Domain.Models
             }
 
             this.Role = role;
+        }
+
+        public void AddRoleInSeed(Role role)
+        {
+            Role  = role;
+            RoleId = role.Id;
         }
 
 

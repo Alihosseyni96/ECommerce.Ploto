@@ -10,6 +10,10 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
         {
             builder.HasKey(rp=> rp.Id);
 
+            builder.Property(x => x.Id)
+    .ValueGeneratedOnAdd();
+
+
             builder.HasOne(rp => rp.Role)
                 .WithMany(r => r.RolePermissions)
                 .HasForeignKey(rp => rp.RoleId)

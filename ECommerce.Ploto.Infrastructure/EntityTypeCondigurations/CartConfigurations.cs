@@ -10,6 +10,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
         {
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Id)
+    .ValueGeneratedOnAdd();
+
+
+
             builder.Property(c => c.TotalAmount)
                 .IsRequired();
 

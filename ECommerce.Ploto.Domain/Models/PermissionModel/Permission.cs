@@ -27,21 +27,41 @@ namespace ECommerce.Ploto.Domain.Models
         /// constructor for create in Seed Data 
         /// </summary>
         /// <param name="permissionType"></param>
-        private Permission(PermissionType permissionType)
+        private Permission(Guid id,PermissionType permissionType)
         {
             if(_rolePermission is null)
                 _rolePermission = new List<RolePermission>();
 
-            this.Id = Guid.NewGuid();
+            this.Id = id;
             this.PermissionType = permissionType;
         }
+        /// <summary>
+        /// Constructor for create Instance 
+        /// </summary>
+        /// <param name="permissionType"></param>
+        private Permission(PermissionType permissionType)
+        {
+            if (_rolePermission is null)
+                _rolePermission = new List<RolePermission>();
+
+            this.PermissionType = permissionType;
+        }
+
 
         /// <summary>
         /// To Create for Seed Data
         /// </summary>
         /// <param name="permissionType"></param>
         /// <returns></returns>
-        public static Permission Create(PermissionType permissionType) { return new Permission(permissionType); }
+        public static Permission Create(Guid id,PermissionType permissionType) { return new Permission(id,permissionType); }
+
+        /// <summary>
+        /// To Ccreate instance
+        /// </summary>
+        /// <param name="permissionType"></param>
+        /// <returns></returns>
+        public static Permission Create( PermissionType permissionType) { return new Permission(permissionType); }
+
 
         public void AddRolePermission(params (Role role , Permission permission)[] values)
         {

@@ -7,6 +7,7 @@ public class Name :BaseValueObject
 {
     public string FirtsName { get;protected set; }
     public string LastName { get;protected set; }
+    
 
     public Name(string fName , string lName)
     {
@@ -19,6 +20,7 @@ public class Name :BaseValueObject
     {
         Validation(fName, lName);
         return new Name(fName , lName);
+        
     }
 
     private static void Validation(string fName , string lName)

@@ -10,6 +10,12 @@ internal class CartItemConfigurations : IEntityTypeConfiguration<CartItem>
     {
         builder.HasKey(ci=> ci.Id);
 
+
+        builder.Property(x => x.Id)
+    .ValueGeneratedOnAdd();
+
+
+
         builder.Property(ci=> ci.Count)
             .IsRequired();
 

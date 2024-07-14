@@ -14,7 +14,7 @@ namespace ECommerce.Ploto.Domain.Models.Image
 
         private UserAvaterImage()
         {
-            base.ContentType = "l";
+            base.ContentType = "image/png";
         }
 
 

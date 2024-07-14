@@ -10,6 +10,10 @@ public class RoleConfigurations : IEntityTypeConfiguration<Role>
     {
         builder.HasKey(r => r.Id);
 
+        builder.Property(x => x.Id)
+    .ValueGeneratedOnAdd();
+
+
 
         builder.Property(r => r.Name)
             .HasMaxLength(50)

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using ECommerce.Ploto.WebAPI.Middlewares;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
+using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -33,8 +34,8 @@ builder.Services.AddScoped<IPlotoUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<PlotoDbContext>(options =>
 {
-    //options.UseNpgsql("Host=localhost;Database=ploto2;Username=pourya;Password=123456;Port=5432");
-    options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+    //options.UseNpgsql(builder.Configuration["ConnectionStrings:postgresql"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerAtAork"]);
 });
 //builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
@@ -43,16 +44,16 @@ builder.Services.AddDbContext<PlotoDbContext>(options =>
 builder.Services.AddCacheAbstraction(config =>
 {
     #region Redis
-    //config.UseRedisCache(options =>
-    //{
-    //    options.ConnectionString = builder.Configuration["Redis:ConnectionString"]!;
-    //});
+    config.UseRedisCache(options =>
+    {
+        options.ConnectionString = builder.Configuration["ConnectionStrings:Redis"]!;
+    });
 
     #endregion
 
     #region InMemory
 
-    config.UseInMemoryCache();
+    //config.UseInMemoryCache();
 
     #endregion
 
@@ -133,6 +134,8 @@ builder.Services.AddRateLimiter(options =>
 
 #endregion
 
+
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -142,6 +145,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseRateLimiter();
 
 #region Authorization
@@ -152,7 +156,12 @@ app.AuthorizationAbstraction(options =>
 });
 #endregion
 
-app.UseMiddleware<ErrorHandlerMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<PlotoDbContext>();
+    dbContext.Database.Migrate();
+}
+
 
 app.MapControllers();
 

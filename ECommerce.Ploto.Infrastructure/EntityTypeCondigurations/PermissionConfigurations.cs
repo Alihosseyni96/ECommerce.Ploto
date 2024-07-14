@@ -15,6 +15,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
         {
             builder.HasKey(p=> p.Id);
 
+            builder.Property(x => x.Id)
+               .ValueGeneratedOnAdd();
+
+
+
             builder.Property(p => p.PermissionType)
                 .IsRequired();
 
@@ -23,9 +28,6 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
                 .HasForeignKey(rp => rp.PermissionId)
                 .IsRequired(false);
 
-            builder.HasData(
-                Permission.Create(PermissionType.UserPanelAccess),
-                Permission.Create(PermissionType.AdminPanelAccess));
         }
     }
 

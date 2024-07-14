@@ -10,6 +10,11 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
         {
             builder.HasKey(p => p.Id);
 
+            builder.Property(x => x.Id)
+    .ValueGeneratedOnAdd();
+
+
+
             builder.Property(p => p.Name)
                 .HasMaxLength(70)
                 .IsRequired();

@@ -22,32 +22,36 @@ public class ErrorHandlerMiddleware
 		}
 		catch (Exception exception)
         {
-            context.Response.Clear();
+            var currentResponse  = context.Response;
             object response;
             int statusCode;
 
-            switch (exception)
+            switch (currentResponse.StatusCode)
             {
-                case UnauthorizedAccessException:
+                case StatusCodes.Status401Unauthorized:
                     response = new { message = "Unauthorized access." };
                     statusCode = StatusCodes.Status401Unauthorized;
                     break;
-                case BadHttpRequestException:
+                case StatusCodes.Status400BadRequest:
                     response = new { message = "Request Is Not Valid" };
                     statusCode = StatusCodes.Status400BadRequest;
 
                     break;
-                case FileNotFoundException:
+                case StatusCodes.Status404NotFound:
                     response = new { message = "server cannot find the requested resourcet" };
                     statusCode = StatusCodes.Status404NotFound;
+                    break;
 
+                case StatusCodes.Status429TooManyRequests:
+                    response = new { message = "you requests are limited" };
+                    statusCode = StatusCodes.Status404NotFound;
                     break;
                 default:
                     response = new { message =  exception.Message ?? "An error occurred while processing your request" };
                     statusCode = StatusCodes.Status500InternalServerError;
-
                     break;
             }
+            context.Response.Clear();
             context.Response.StatusCode = statusCode;
             await context.Response.WriteAsJsonAsync(response);
 		}
