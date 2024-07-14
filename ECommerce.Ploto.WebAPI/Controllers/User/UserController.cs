@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Runtime.InteropServices;
 
@@ -18,6 +19,7 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("rate-limit-ip-policy")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -37,6 +39,7 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
 
         [HttpPost]
         [Route("register")]
+        //[DisableRateLimiting] // To Disable RateLimit Atrribute
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
             await _mediator.Send(command);

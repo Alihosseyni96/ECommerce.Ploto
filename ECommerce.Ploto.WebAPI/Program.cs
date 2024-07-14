@@ -10,6 +10,8 @@ using ECommerce.Ploto.Common.AuthenticationAbstraction.Configuration;
 using System.Drawing;
 using Microsoft.AspNetCore.Diagnostics;
 using ECommerce.Ploto.WebAPI.Middlewares;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,7 +29,7 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblies(typeof(GetAllUserQueryHandler).Assembly);
 });
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();    
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -89,6 +91,48 @@ builder.Services.AddAuthenticationAbstraction(config =>
 
 #endregion
 
+#region Rate Limit 
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; // StatusCode When Hit Limits
+
+    options.AddPolicy("rate-limit-ip-policy", httpContext =>
+           RateLimitPartition.GetFixedWindowLimiter(
+               partitionKey: httpContext.Connection.LocalIpAddress?.ToString(), // every ip will be Limited if call One API more then 10 times in 10 seconeds
+               factory: _ => new FixedWindowRateLimiterOptions
+               {
+                   PermitLimit = 100,
+                   Window = TimeSpan.FromSeconds(60),
+                   QueueProcessingOrder = QueueProcessingOrder.OldestFirst, // sort for queue and process 
+                   QueueLimit = 10, // when hit limitation , excess reqesust will be queued and will go for process when windows will be open again
+                   AutoReplenishment = true,
+               }));
+
+    //options.AddFixedWindowLimiter("fixed", o => // this is fixed type for limitation type- will be process 10 request in 10 seconds and windows start point is fixed 
+    //{
+    //    o.PermitLimit = 10;
+    //    o.Window = TimeSpan.FromSeconds(10);
+    //    o.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    //    o.QueueLimit = 5;
+    //    o.AutoReplenishment = true; // refresh window when window time is new and epmty if from before requests
+    //});
+    //options.AddSlidingWindowLimiter(); // in this case , windows start point will slide with first request and windows start point in not fixed
+
+    //options.AddTokenBucketLimiter("tokenBucketPolicy", limiterOptions => // in this type there will be a token storage which every comes in Request will picked up one of those Token , and processing requests will keeps going untill token storage is not empty, and by time as you configure , token will be added to storage
+    //{
+    //    limiterOptions.TokenLimit = 10; // Bucket can hold 10 tokens
+    //    limiterOptions.TokensPerPeriod = 1; // Add 1 token per second
+    //    limiterOptions.ReplenishmentPeriod = TimeSpan.FromSeconds(1); // Refill rate
+    //});
+
+
+    //options.AddConcurrencyLimiter() // this is fot concurrent Request for Application.. you can say just proccess 5 cuncurrent request  in same time
+});
+
+
+#endregion
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -98,6 +142,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRateLimiter();
 
 #region Authorization
 app.AuthorizationAbstraction(options =>
