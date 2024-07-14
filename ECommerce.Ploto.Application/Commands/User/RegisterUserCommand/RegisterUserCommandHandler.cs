@@ -2,18 +2,23 @@
 using ECommerce.Ploto.Domain.Models;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
 {
-    public class RehisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPlotoUnitOfWork _uw;
+        private readonly string _defaultRole;
+        private readonly IConfiguration _configuration;
 
-        public RehisterUserCommandHandler(IMapper mapper, IPlotoUnitOfWork uw)
+        public RegisterUserCommandHandler(IMapper mapper, IPlotoUnitOfWork uw, IConfiguration configuration)
         {
             _mapper = mapper;
             _uw = uw;
+            _configuration = configuration;
+            _defaultRole = _configuration["DefaultRole"]!;
         }
 
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -24,6 +29,11 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
                 request.Password,
                 HomeNumber.Create(request.Number, request.CityCode),
                 Address.Create(request.City, request.Avenue, request.HouseNO));
+
+            var userRole = await _uw.RoleRepository
+                .SingleOrDdfaultAsync(r => r.Name == "User");
+
+            user.AddRole(userRole);
 
             await _uw.UserRepository.AddAsync(user , cancellationToken);
 

@@ -156,12 +156,6 @@ app.AuthorizationAbstraction(options =>
 });
 #endregion
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<PlotoDbContext>();
-    dbContext.Database.Migrate();
-}
-
 
 app.MapControllers();
 

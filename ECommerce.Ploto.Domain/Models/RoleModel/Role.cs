@@ -6,6 +6,7 @@ namespace ECommerce.Ploto.Domain.Models
     public class Role : BaseEntity<Guid>, IAggregateRoot
     {
         public string Name { get; private set; }
+        private List<User> _users;
         private List<RolePermission> _rolePermissions;
 
         /// <summary>
@@ -13,7 +14,7 @@ namespace ECommerce.Ploto.Domain.Models
         /// </summary>
         public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions.AsReadOnly();
 
-
+        public IReadOnlyCollection<User> Users => _users.AsReadOnly();
         /// <summary>
         /// constructor for ORM
         /// </summary>

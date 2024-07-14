@@ -11,6 +11,8 @@ namespace ECommerce.Ploto.Infrastructure
 
         public static void Seed(ModelBuilder modelBuilder)
         {
+            
+
 
             #region Permissions
             var permission1 = Permission.Create(Guid.NewGuid(), PermissionType.UserPanelAccess);
@@ -42,13 +44,13 @@ namespace ECommerce.Ploto.Infrastructure
 
             #region User - how to seed entity which have value Objetcs
             var adminuser = User.Create(Guid.NewGuid(), Name.Create("pourya", "hosseyni"), "09386562888", "123456", HomeNumber.Create("123456799", "021"), Address.Create("tehran", "resalat", 54));
-            adminuser.AddRoleInSeed(role1);
+            adminuser.AddRole(role1);
 
             modelBuilder.Entity<User>(builder =>
             {
 
                 builder.OwnsOne(u => u.Address)
-                .HasData(new { UserId = adminuser.Id, City = "tehran", Avenue = "resalat", HouseNO = 54 });
+                .HasData(new { UserId = adminuser.Id, City = adminuser.Address.City, Avenue = adminuser.Address.Avenue, HouseNO = adminuser.Address.HouseNO });
 
                 builder.OwnsOne(u => u.Name)
                 .HasData(new { UserId = adminuser.Id, FirtsName = adminuser.Name.FirtsName, LastName = adminuser.Name.LastName });
@@ -56,7 +58,7 @@ namespace ECommerce.Ploto.Infrastructure
                 builder.OwnsOne(u=> u.HomeNumber)
                 .HasData(new { UserId = adminuser.Id, Number = adminuser.HomeNumber.Number, CityCode= adminuser.HomeNumber.CityCode });
 
-                builder.HasData(new {Id = adminuser.Id , PhoneNumber = adminuser.PhoneNumber, Password = "123456", RoleId = adminuser.RoleId });
+                builder.HasData(new {Id = adminuser.Id , PhoneNumber = adminuser.PhoneNumber, Password = adminuser.Password, RoleId = adminuser.RoleId });
             });
 
             #endregion

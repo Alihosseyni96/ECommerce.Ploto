@@ -16,7 +16,7 @@ namespace ECommerce.Ploto.Infrastructure.Context
     {
         private readonly IMediator _mediator;
 
-        public PlotoDbContext(DbContextOptions<PlotoDbContext> options,IMediator mediator): base(options)   
+        public PlotoDbContext(DbContextOptions<PlotoDbContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator;
         }
@@ -25,7 +25,10 @@ namespace ECommerce.Ploto.Infrastructure.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
-            Seeder.Seed(modelBuilder);
+            //Seeder.Seed(modelBuilder);
+
+
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -52,11 +55,11 @@ namespace ECommerce.Ploto.Infrastructure.Context
 
 
             var domainEvents = entitiesWithDomainEvens
-                .SelectMany(x=> x.Entity.DomainEvents)
+                .SelectMany(x => x.Entity.DomainEvents)
                 .ToList();
 
             entitiesWithDomainEvens.ToList()
-                .ForEach(entity=> entity.Entity.ClearDomainEvents());
+                .ForEach(entity => entity.Entity.ClearDomainEvents());
 
             var tasks = domainEvents.Select(async x => { await _mediator.Publish(x); });
 
@@ -64,6 +67,7 @@ namespace ECommerce.Ploto.Infrastructure.Context
 
 
         }
+
 
     }
 }

@@ -26,6 +26,7 @@ namespace ECommerce.Ploto.Infrastructure.EntityTypeCondigurations
             builder.HasMany(p => p.RolePermissions)
                 .WithOne(rp => rp.Permission)
                 .HasForeignKey(rp => rp.PermissionId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(false);
 
         }

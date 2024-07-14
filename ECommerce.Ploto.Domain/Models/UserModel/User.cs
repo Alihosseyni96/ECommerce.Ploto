@@ -121,14 +121,9 @@ namespace ECommerce.Ploto.Domain.Models
                 return;
             }
 
-            this.Role = role;
-        }
-
-        public void AddRoleInSeed(Role role)
-        {
-            Role  = role;
             RoleId = role.Id;
         }
+
 
 
     }

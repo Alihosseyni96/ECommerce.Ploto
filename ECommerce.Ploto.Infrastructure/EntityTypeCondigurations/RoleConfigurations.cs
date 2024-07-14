@@ -24,15 +24,12 @@ public class RoleConfigurations : IEntityTypeConfiguration<Role>
             .HasForeignKey(rp => rp.RoleId)
             .IsRequired();
 
-        #region Seed Data
-        builder.HasData(
+        builder.HasMany(r=> r.Users)
+            .WithOne(u=> u.Role)
+            .HasForeignKey(u=> u.RoleId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-    //Role.Create(Guid.NewGuid(), "Admin"),
-    //Role.Create(Guid.NewGuid(), "user")
-    );
-
-
-        #endregion
+        
 
     }
 }
