@@ -1,4 +1,5 @@
-﻿using ECommerce.Ploto.Domain.IRepositories;
+﻿using ECommerce.Ploto.Common.Dommin.Base;
+using ECommerce.Ploto.Domain.IRepositories;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
 using ECommerce.Ploto.Infrastructure.Repositories;
@@ -7,9 +8,9 @@ using System.Transactions;
 
 namespace ECommerce.Ploto.Infrastructure.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork :   BaseUnitOfWork , IPlotoUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PlotoDbContext _context;
         private IDbContextTransaction _currentTransaction;
         private TransactionScope _transactionScope;
 
@@ -21,7 +22,7 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
         public IRoleRepository RoleRepository { get; set; }
         public IPermissionRepository PermissionRepository { get; set; }
         
-        public UnitOfWork(ApplicationDbContext db)
+        public UnitOfWork(PlotoDbContext db)
         {
             if (db == null) throw new ArgumentNullException(nameof(db));
 
@@ -61,26 +62,6 @@ namespace ECommerce.Ploto.Infrastructure.UnitOfWork
                     _currentTransaction.Dispose();
 
                 _currentTransaction = null;
-            }
-
-        }
-
-        public void BeginTransactionScope()
-        {
-            _transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        }
-
-
-        public void CompleteTransactionScope()
-        {
-            try
-            {
-                _transactionScope.Complete();
-            }
-            finally
-            {
-                _transactionScope?.Dispose();
-                _transactionScope = null;
             }
 
         }

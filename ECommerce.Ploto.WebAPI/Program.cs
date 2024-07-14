@@ -29,9 +29,9 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblies(typeof(GetAllUserQueryHandler).Assembly);
 });
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPlotoUnitOfWork, UnitOfWork>();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<PlotoDbContext>(options =>
 {
     //options.UseNpgsql("Host=localhost;Database=ploto2;Username=pourya;Password=123456;Port=5432");
     options.UseSqlServer("Data Source=.;Initial Catalog=ploto-database;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");

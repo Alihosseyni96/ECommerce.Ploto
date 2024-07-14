@@ -7,7 +7,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        public ProductRepository(ApplicationDbContext db) : base(db) 
+        public ProductRepository(PlotoDbContext db) : base(db) 
         {
         }
     }

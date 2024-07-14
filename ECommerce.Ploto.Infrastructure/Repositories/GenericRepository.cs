@@ -9,9 +9,9 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
+        private readonly PlotoDbContext _db;
         private readonly DbSet<T> _dbSet;
-        public GenericRepository(ApplicationDbContext dbContext)
+        public GenericRepository(PlotoDbContext dbContext)
         {
             _db = dbContext;
             _dbSet = dbContext.Set<T>();

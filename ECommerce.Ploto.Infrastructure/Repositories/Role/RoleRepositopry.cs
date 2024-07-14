@@ -6,7 +6,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 {
     public class RoleRepositopry : GenericRepository<Role> , IRoleRepository 
     {
-        public RoleRepositopry(ApplicationDbContext db):base(db)
+        public RoleRepositopry(PlotoDbContext db):base(db)
         {
             
         }

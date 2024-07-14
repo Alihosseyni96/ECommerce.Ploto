@@ -14,7 +14,7 @@
 //    private readonly IUnitOfWork _unitOfWork;
 //    private readonly IMapper _mapper;
 //    private readonly ICookieBaseAuthenticationService _cookieBaseAuthService;
-//    private readonly ApplicationDbContext _db;
+//    private readonly PlotoDbContext _db;
 
 //    public LoginUserCoockieBaseBaseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ICookieBaseAuthenticationService cookieBaseAuthService)
 //    {

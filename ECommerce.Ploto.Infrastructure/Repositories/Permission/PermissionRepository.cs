@@ -6,7 +6,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 {
     public class PermissionRepository : GenericRepository<Permission>, IPermissionRepository
     {
-        public PermissionRepository(ApplicationDbContext db) :base (db)
+        public PermissionRepository(PlotoDbContext db) :base (db)
         {
             
         }

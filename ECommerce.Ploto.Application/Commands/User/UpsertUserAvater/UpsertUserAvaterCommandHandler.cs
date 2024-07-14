@@ -11,10 +11,10 @@ namespace ECommerce.Ploto.Application.Commands.User.UpsertUserAvater
 {
     public class UpsertUserAvaterCommandHandler : IRequestHandler<UpsertUserAvatarCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPlotoUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpsertUserAvaterCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpsertUserAvaterCommandHandler(IPlotoUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

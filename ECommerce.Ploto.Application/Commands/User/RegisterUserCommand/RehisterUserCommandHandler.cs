@@ -8,9 +8,9 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
     public class RehisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _uw;
+        private readonly IPlotoUnitOfWork _uw;
 
-        public RehisterUserCommandHandler(IMapper mapper, IUnitOfWork uw)
+        public RehisterUserCommandHandler(IMapper mapper, IPlotoUnitOfWork uw)
         {
             _mapper = mapper;
             _uw = uw;

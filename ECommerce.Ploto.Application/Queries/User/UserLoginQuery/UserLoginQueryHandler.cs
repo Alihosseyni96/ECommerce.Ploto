@@ -15,10 +15,10 @@ namespace ECommerce.Ploto.Application.Queries.User.UserLoginQuery
     {
         private readonly ICacheService _cacheService;
         private readonly ITokenBaseAuthenticationService _tokebBaseAuthService;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPlotoUnitOfWork _unitOfWork;
         private readonly string _loginCachePrefix;
 
-        public UserLoginQueryHandler(ICacheService cacheService, ITokenBaseAuthenticationService tokebBaseAuthService, IUnitOfWork unitOfWork)
+        public UserLoginQueryHandler(ICacheService cacheService, ITokenBaseAuthenticationService tokebBaseAuthService, IPlotoUnitOfWork unitOfWork)
         {
             _cacheService = cacheService;
             _tokebBaseAuthService = tokebBaseAuthService;

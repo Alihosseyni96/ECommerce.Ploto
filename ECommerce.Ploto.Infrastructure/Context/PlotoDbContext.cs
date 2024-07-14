@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Ploto.Infrastructure.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class PlotoDbContext : DbContext
     {
         private readonly IMediator _mediator;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IMediator mediator): base(options)   
+        public PlotoDbContext(DbContextOptions<PlotoDbContext> options,IMediator mediator): base(options)   
         {
             _mediator = mediator;
         }

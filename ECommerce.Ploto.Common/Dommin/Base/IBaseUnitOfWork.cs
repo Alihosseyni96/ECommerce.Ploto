@@ -18,23 +18,5 @@ namespace ECommerce.Ploto.Common.Dommin.Base
         /// </summary>
         public void CompleteTransactionScope();
 
-        /// <summary>
-        /// Begin Transaction
-        /// </summary>
-        /// <returns></returns>
-        public Task BeginTransactionAsync(CancellationToken ct  = default);
-        /// <summary>
-        /// Commit Transaction
-        /// </summary>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        public Task CommitTransactionAsync(CancellationToken ct = default);
-
-        /// <summary>
-        /// Apply Save Change On DataBase
-        /// </summary>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        public Task SaveChangeAsync(CancellationToken ct = default);
     }
 }

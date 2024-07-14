@@ -12,10 +12,10 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
 {
     public class GetAllUserQueryHandler : IRequestHandler<GetUsersQuery, FilteredResult<UserDto>>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPlotoUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetAllUserQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetAllUserQueryHandler(IPlotoUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

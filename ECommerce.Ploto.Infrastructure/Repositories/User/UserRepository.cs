@@ -6,7 +6,7 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
 {
     public  class UserRepository : GenericRepository<User> , IUserRepository
     {
-        public UserRepository(ApplicationDbContext db) : base(db)
+        public UserRepository(PlotoDbContext db) : base(db)
         {
             
         }

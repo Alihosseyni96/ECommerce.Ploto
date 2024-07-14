@@ -7,10 +7,10 @@ namespace ECommerce.Ploto.Application.Commands.User.AssignRoleCommand
 {
     public class AssignRoleCommandHandler : IRequestHandler<AssignRoleCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPlotoUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AssignRoleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public AssignRoleCommandHandler(IPlotoUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
