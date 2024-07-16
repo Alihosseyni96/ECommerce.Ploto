@@ -60,5 +60,10 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
             _memoryCache.Remove(key);
             return Task.FromResult(true);
         }
+
+        public Task RemoveKeyPatternAsync(string pattern, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

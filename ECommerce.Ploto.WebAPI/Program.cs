@@ -47,7 +47,9 @@ builder.Services.AddCacheAbstraction(config =>
     #region Redis
     config.UseRedisCache(options =>
     {
-        options.ConnectionString = builder.Configuration["ConnectionStrings:Redis"]!;
+        options.Host = builder.Configuration["ConnectionStrings:Redis:Host"];
+        options.Port = int.Parse(builder.Configuration["ConnectionStrings:Redis:Port"]);
+        options.Password = builder.Configuration["ConnectionStrings:Redis:Password"];
         options.ProjectNamePrefix = Assembly.GetEntryAssembly().GetName().Name;
         options.EnvironmentPrefix = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     });

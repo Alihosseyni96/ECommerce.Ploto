@@ -38,8 +38,16 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
                 var redisOptions = new RedisCacheOptions();
                 action(redisOptions);
 
-                _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisOptions.ConnectionString));
-                _services.AddSingleton<ICacheService, RedisCacheService>();
+                var redisConfiguration = new ConfigurationOptions()
+                {
+                    EndPoints = { { redisOptions.Host, redisOptions.Port } },
+                    Ssl = redisOptions.Ssl.Value,
+                    Password = redisOptions.Password,
+                    AbortOnConnectFail = redisOptions.AbortConnect.Value
+                };
+
+                _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConfiguration));
+                _services.AddScoped<ICacheService, RedisCacheService>();
                 _services.AddSingleton(redisOptions);
                 return this;
             }
