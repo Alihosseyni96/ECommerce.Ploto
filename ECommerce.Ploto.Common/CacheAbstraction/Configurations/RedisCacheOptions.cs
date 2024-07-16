@@ -15,6 +15,6 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
         public bool? AbortConnect { get; set; } = false;
         public string ProjectNamePrefix { get; set; }
         public string EnvironmentPrefix { get; set; }
-        internal string? Prefix { get => $"{ProjectNamePrefix}-{EnvironmentPrefix}-" ; } 
+        internal string? Prefix { get => $"{ProjectNamePrefix}-{EnvironmentPrefix}:" ; } 
     }
 }
