@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
+using System.Reflection;
 
 namespace ECommerce.Ploto.Common.CacheAbstraction;
 
@@ -8,17 +9,25 @@ public class RedisCacheService : ICacheService
 {
     private readonly IConnectionMultiplexer _redisConnection;
     private readonly IDatabase _database;
+    private readonly string? _projectName;
+    private readonly string? _env;
+    private readonly string? _prefix;
 
     public RedisCacheService(IConnectionMultiplexer redisConnection)
     {
         _redisConnection = redisConnection;
         _database = _redisConnection.GetDatabase();
+        _projectName = Assembly.GetEntryAssembly().GetName().Name;
+        _env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        _prefix = $"{_projectName}-{_env}-";
     }
 
-    public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan cacheExpiration ,CancellationToken cancellationToken = default)
+    public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan? cacheExpiration = null ,CancellationToken cancellationToken = default)
     {
-        var lockKey = $"lock:{key}";
-        var cacheValue = await _database.StringGetAsync(key);
+        var lockBase = $"lock-{key}";
+        var lockKey = $"{_prefix}lock-{key}";
+        var baseKey = $"{_prefix}{key}";
+        var cacheValue = await _database.StringGetAsync(baseKey);
 
         if (cacheValue.IsNullOrEmpty)
         {
@@ -32,7 +41,8 @@ public class RedisCacheService : ICacheService
                 }
                 finally
                 {
-                    await RemoveAsync(lockKey , cancellationToken);
+                    await RemoveAsync(lockBase, cancellationToken);
+                    cacheValue = await _database.StringGetAsync(baseKey);
                 }
             }
             else
@@ -49,13 +59,16 @@ public class RedisCacheService : ICacheService
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? expiry = null, CancellationToken cancellationToken = default)
     {
+        key = $"{_prefix}{key}";
         var serializedValue = JsonConvert.SerializeObject(value);
          await _database.StringSetAsync(key, serializedValue, expiry);
     }
 
     public async Task<bool> RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
+        key = $"{_prefix}{key}";
         return await _database.KeyDeleteAsync(key);
     }
+
 }
 

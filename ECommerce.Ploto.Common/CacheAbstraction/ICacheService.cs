@@ -8,7 +8,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
 {
     public interface ICacheService
     {
-        Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan cacheExpiration, CancellationToken cancellationToken = default);
+        Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan? cacheExpiration = null, CancellationToken cancellationToken = default);
         Task SetAsync<T>(string key, T value, TimeSpan? expiry = null, CancellationToken cancellationToken = default);
         Task<bool> RemoveAsync(string key, CancellationToken cancellationToken = default);
     }

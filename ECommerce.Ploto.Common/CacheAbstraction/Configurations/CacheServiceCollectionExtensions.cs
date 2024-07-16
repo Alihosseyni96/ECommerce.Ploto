@@ -10,7 +10,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
 {
     public static class CacheServiceCollectionExtensions
     {
-        public static IServiceCollection AddCacheAbstraction(this IServiceCollection services , Action<CacheConfig> cacheConfig) 
+        public static IServiceCollection AddCacheAbstraction(this IServiceCollection services, Action<CacheConfig> cacheConfig)
         {
             var config = new CacheConfig(services);
             cacheConfig(config);
@@ -37,7 +37,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
             {
                 var redisOptions = new RedisCacheOptions();
                 action(redisOptions);
-                
+
                 _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisOptions.ConnectionString));
                 _services.AddSingleton<ICacheService, RedisCacheService>();
                 return this;
