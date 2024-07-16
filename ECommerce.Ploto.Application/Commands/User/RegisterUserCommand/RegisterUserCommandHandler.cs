@@ -4,6 +4,7 @@ using ECommerce.Ploto.Domain.Models;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.InteropServices;
 
 namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
 {
@@ -27,21 +28,28 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
 
-            var user = Domain.Models.User
-                .Create(Name.Create(request.FirtsName, request.LastName),
-                request.PhoneNumber,
-                request.Password,
-                HomeNumber.Create(request.Number, request.CityCode),
-                Address.Create(request.City, request.Avenue, request.HouseNO));
+            await _redisCacehService.SetAsync("user:1", "pourya");
 
-            var userRole = await _uw.RoleRepository
-                .SingleOrDdfaultAsync(r => r.Name == "User");
+            await _redisCacehService.GetAsync<string>("user:2", async () =>
+            {
+                return await Task.FromResult("ALI");
+            });
 
-            user.AddRole(userRole);
+            //var user = Domain.Models.User
+            //    .Create(Name.Create(request.FirtsName, request.LastName),
+            //    request.PhoneNumber,
+            //    request.Password,
+            //    HomeNumber.Create(request.Number, request.CityCode),
+            //    Address.Create(request.City, request.Avenue, request.HouseNO));
 
-            await _uw.UserRepository.AddAsync(user, cancellationToken);
+            //var userRole = await _uw.RoleRepository
+            //    .SingleOrDdfaultAsync(r => r.Name == "User");
 
-            await _uw.SaveChangeAsync(cancellationToken);
+            //user.AddRole(userRole);
+
+            //await _uw.UserRepository.AddAsync(user, cancellationToken);
+
+            //await _uw.SaveChangeAsync(cancellationToken);
 
         }
     }

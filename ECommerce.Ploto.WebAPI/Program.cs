@@ -13,6 +13,7 @@ using ECommerce.Ploto.WebAPI.Middlewares;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using System;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -47,6 +48,8 @@ builder.Services.AddCacheAbstraction(config =>
     config.UseRedisCache(options =>
     {
         options.ConnectionString = builder.Configuration["ConnectionStrings:Redis"]!;
+        options.ProjectNamePrefix = Assembly.GetEntryAssembly().GetName().Name;
+        options.EnvironmentPrefix = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     });
 
     #endregion

@@ -40,6 +40,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction.Configurations
 
                 _services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisOptions.ConnectionString));
                 _services.AddSingleton<ICacheService, RedisCacheService>();
+                _services.AddSingleton(redisOptions);
                 return this;
             }
         }
