@@ -28,28 +28,22 @@ namespace ECommerce.Ploto.Application.Commands.User.RegisterUserCommand
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
 
-            await _redisCacehService.SetAsync("user:1", "pourya");
 
-            await _redisCacehService.GetAsync<string>("user:2", async () =>
-            {
-                return await Task.FromResult("ALI");
-            });
+            var user = Domain.Models.User
+                .Create(Name.Create(request.FirtsName, request.LastName),
+                request.PhoneNumber,
+                request.Password,
+                HomeNumber.Create(request.Number, request.CityCode),
+                Address.Create(request.City, request.Avenue, request.HouseNO));
 
-            //var user = Domain.Models.User
-            //    .Create(Name.Create(request.FirtsName, request.LastName),
-            //    request.PhoneNumber,
-            //    request.Password,
-            //    HomeNumber.Create(request.Number, request.CityCode),
-            //    Address.Create(request.City, request.Avenue, request.HouseNO));
+            var userRole = await _uw.RoleRepository
+                .SingleOrDdfaultAsync(r => r.Name == "User");
 
-            //var userRole = await _uw.RoleRepository
-            //    .SingleOrDdfaultAsync(r => r.Name == "User");
+            user.AddRole(userRole);
 
-            //user.AddRole(userRole);
+            await _uw.UserRepository.AddAsync(user, cancellationToken);
 
-            //await _uw.UserRepository.AddAsync(user, cancellationToken);
-
-            //await _uw.SaveChangeAsync(cancellationToken);
+            await _uw.SaveChangeAsync(cancellationToken);
 
         }
     }
