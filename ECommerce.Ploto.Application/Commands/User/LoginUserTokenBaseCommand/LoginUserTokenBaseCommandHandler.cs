@@ -44,7 +44,7 @@ namespace ECommerce.Ploto.Application.Commands.User.LoginUserTokenBaseCommand
 
                 throw new UserNotFoundException();
             var token = _authService.GenerateToken(("UserId", user.Id.ToString()),("Role",user.Role.Name),("Permissions", permissionConcated));
-            //await _cacheService.SetAsync($"token:{user.Id}",token,TimeSpan.FromDays(30),cancellationToken);
+            await _cacheService.SetAsync($"token:{user.Id}", token, TimeSpan.FromDays(30), cancellationToken);
 
             return new LoginUserTokenBaseResponse(token);
         }
