@@ -18,7 +18,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
             _memoryCache = memoryCache;
         }
 
-        public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan cacheExpiration, CancellationToken cancellationToken = default)
+        public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan? cacheExpiration = null, CancellationToken cancellationToken = default)
         {
             var lockKey = $"lock:{key}";
 
@@ -59,6 +59,11 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
         {
             _memoryCache.Remove(key);
             return Task.FromResult(true);
+        }
+
+        public Task RemoveKeyPatternAsync(string pattern, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

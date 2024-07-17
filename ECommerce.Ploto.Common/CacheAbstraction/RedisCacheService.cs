@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ECommerce.Ploto.Common.CacheAbstraction.Configurations;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
+using System.Reflection;
 
 namespace ECommerce.Ploto.Common.CacheAbstraction;
 
@@ -8,21 +11,26 @@ public class RedisCacheService : ICacheService
 {
     private readonly IConnectionMultiplexer _redisConnection;
     private readonly IDatabase _database;
+    private readonly RedisCacheOptions _redisOptions;
 
-    public RedisCacheService(IConnectionMultiplexer redisConnection)
+    public RedisCacheService(IConnectionMultiplexer redisConnection, RedisCacheOptions redisOptions)
     {
         _redisConnection = redisConnection;
         _database = _redisConnection.GetDatabase();
+        _redisOptions = redisOptions;
     }
 
-    public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan cacheExpiration ,CancellationToken cancellationToken = default)
+    public async Task<T> GetAsync<T>(string key, Func<Task<T>> fetchFromDb, TimeSpan? cacheExpiration = null, CancellationToken cancellationToken = default)
     {
-        var lockKey = $"lock:{key}";
-        var cacheValue = await _database.StringGetAsync(key);
+        var lockBase = $"lock-{key}";
+        var lockKey = $"{_redisOptions.Prefix}lock-{key}";
+        var baseKey = $"{_redisOptions.Prefix}{key}";
+
+        var cacheValue = await _database.StringGetAsync(baseKey);
 
         if (cacheValue.IsNullOrEmpty)
         {
-            if(await _database.StringSetAsync(lockKey , "1",TimeSpan.FromSeconds(10) , When.NotExists))
+            if (await _database.StringSetAsync(lockKey, "1", TimeSpan.FromSeconds(10), When.NotExists))
             {
                 try
                 {
@@ -32,7 +40,8 @@ public class RedisCacheService : ICacheService
                 }
                 finally
                 {
-                    await RemoveAsync(lockKey , cancellationToken);
+                    await RemoveAsync(lockBase, cancellationToken);
+                    cacheValue = await _database.StringGetAsync(baseKey);
                 }
             }
             else
@@ -49,13 +58,24 @@ public class RedisCacheService : ICacheService
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? expiry = null, CancellationToken cancellationToken = default)
     {
+        key = $"{_redisOptions.Prefix}{key}";
         var serializedValue = JsonConvert.SerializeObject(value);
-         await _database.StringSetAsync(key, serializedValue, expiry);
+        await _database.StringSetAsync(key, serializedValue, expiry);
     }
 
     public async Task<bool> RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
+        key = $"{_redisOptions.Prefix}{key}";
         return await _database.KeyDeleteAsync(key);
     }
+
+    public async Task RemoveKeyPatternAsync(string pattern, CancellationToken cancellationToken = default)
+    {
+        pattern = $"*{_redisOptions.Prefix}{pattern}";
+        var server = _redisConnection.GetServer($"{_redisOptions.Host}:{_redisOptions.Port}");
+        var kyes = server.Keys(pattern: pattern).ToArray();
+        await _database.KeyDeleteAsync(kyes);
+    }
+
 }
 
