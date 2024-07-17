@@ -18,7 +18,10 @@ namespace ECommerce.Ploto.Domain.Models
         /// <summary>
         /// constructor for ORM
         /// </summary>
-        private Role() { }
+        private Role()
+        {
+            _rolePermissions = new List<RolePermission>();
+        }
 
         /// <summary>
         /// constructor for create instanc with id

@@ -1,5 +1,6 @@
 ﻿using ECommerce.Ploto.Application.Commands.User.AssignRoleCommand;
 using ECommerce.Ploto.Application.Commands.User.LoginUserCookieBaseCommand;
+using ECommerce.Ploto.Application.Commands.User.LoginUserTokenBaseCommand;
 using ECommerce.Ploto.Application.Commands.User.RegisterUserCommand;
 using ECommerce.Ploto.Application.Commands.User.UpsertUserAvater;
 using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
@@ -69,6 +70,15 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         public async Task AssignRole([FromBody]AssignRoleCommand command)
         {
             await _mediator.Send(command);
+        }
+
+
+        [HttpPost]
+        [Route("login-token-base-auth")]
+
+        public async Task<LoginUserTokenBaseResponse> LoginTokenBase([FromBody]LoginUserTokenBaseCommand command)
+        {
+            return await _mediator.Send(command);
         }
 
     }

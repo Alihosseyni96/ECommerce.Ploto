@@ -11,17 +11,20 @@ namespace ECommerce.Ploto.Domain.Models
     public class Permission : BaseEntity<Guid>
     {
         public PermissionType PermissionType { get; protected set; }
-        private List<RolePermission> _rolePermission;
+        private List<RolePermission> _rolePermissions;
 
         /// <summary>
-        /// backing Field
+        /// backing filed
         /// </summary>
-        public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermission.AsReadOnly();
+        public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions.AsReadOnly();
 
         /// <summary>
         /// For ORM
         /// </summary>
-        private Permission() { }
+        private Permission()
+        {
+            _rolePermissions = new List<RolePermission>();
+        }
 
         /// <summary>
         /// constructor for create in Seed Data 
@@ -29,8 +32,8 @@ namespace ECommerce.Ploto.Domain.Models
         /// <param name="permissionType"></param>
         private Permission(Guid id,PermissionType permissionType)
         {
-            if(_rolePermission is null)
-                _rolePermission = new List<RolePermission>();
+            if(_rolePermissions is null)
+                _rolePermissions = new List<RolePermission>();
 
             this.Id = id;
             this.PermissionType = permissionType;
@@ -41,8 +44,8 @@ namespace ECommerce.Ploto.Domain.Models
         /// <param name="permissionType"></param>
         private Permission(PermissionType permissionType)
         {
-            if (_rolePermission is null)
-                _rolePermission = new List<RolePermission>();
+            if (_rolePermissions is null)
+                _rolePermissions = new List<RolePermission>();
 
             this.PermissionType = permissionType;
         }
@@ -67,7 +70,7 @@ namespace ECommerce.Ploto.Domain.Models
         {
             foreach(var value in values)
             {
-                _rolePermission.Add(RolePermission.Create(value.role, value.permission));
+                _rolePermissions.Add(RolePermission.Create(value.role, value.permission));
             }
         }
 

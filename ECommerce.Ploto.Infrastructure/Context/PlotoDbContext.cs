@@ -25,7 +25,7 @@ namespace ECommerce.Ploto.Infrastructure.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
-            //Seeder.Seed(modelBuilder);
+            Seeder.Seed(modelBuilder);
 
 
 
