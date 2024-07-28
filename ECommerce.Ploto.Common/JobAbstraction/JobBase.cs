@@ -10,7 +10,6 @@ namespace ECommerce.Ploto.Common.JobAbstraction
 {
     public abstract class JobBase : IJob
     {
-
         public async Task Execute(IJobExecutionContext context)
         {
             try

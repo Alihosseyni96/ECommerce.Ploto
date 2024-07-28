@@ -1,4 +1,5 @@
 ﻿using ECommerce.Ploto.Common.JobAbstraction.QuartzImplementation;
+using ECommerce.Ploto.Common.JobAbstraction.QuartzImplementation.TriggeredJobs;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Impl;
@@ -38,6 +39,8 @@ namespace ECommerce.Ploto.Common.JobAbstraction.Configurations
             {
                 var options = new QuartzOptions();
                 action(options);
+
+                _services.AddSingleton<ITriggeredJobService, TriggeredJobService>();
 
 
                 var types = options.Assembly

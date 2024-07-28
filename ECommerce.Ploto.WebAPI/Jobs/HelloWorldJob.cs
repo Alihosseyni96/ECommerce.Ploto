@@ -4,21 +4,13 @@ using Quartz;
 
 namespace ECommerce.Ploto.WebAPI.Jobs
 {
-    [QuartzContinuousSchedulerJob("Test2", "0/5 * * ? * * *")]
-    public class HelloWordJob : JobBase
+    //[QuartzContinuousSchedulerJob("Hello-world", "0/2 * * * * ?")]
+    public class HelloWorldJob : JobBase
     {
-        //public Task Execute(IJobExecutionContext context)
-        //{
-        //    Console.WriteLine($"Hello world {context.JobDetail.Key.Name}");
-        //    return Task.CompletedTask;
-        //}
-
-
         public override Task JobService(IJobExecutionContext context)
         {
-            Console.WriteLine($"Hello world {context.JobDetail.Key.Name}");
-
+            Console.WriteLine("Hello world");
             return Task.CompletedTask;
         }
-        }
+    }
 }

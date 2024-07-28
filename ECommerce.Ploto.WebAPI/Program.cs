@@ -15,7 +15,6 @@ using System.Threading.RateLimiting;
 using System;
 using System.Reflection;
 using ECommerce.Ploto.Common.JobAbstraction.Configurations;
-using ECommerce.Ploto.Application.Jobs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -141,7 +140,7 @@ builder.Services.AddRateLimiter(options =>
 
 #endregion
 
-builder.Services.AddScoped<HelloWordJob>();
+//builder.Services.AddScoped<HelloWordJob>();
 
 builder.Services.AddJobAbstraction(options =>
 {

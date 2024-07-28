@@ -6,7 +6,10 @@ using ECommerce.Ploto.Application.Commands.User.UpsertUserAvater;
 using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
 using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Common.Extensions;
+using ECommerce.Ploto.Common.JobAbstraction;
+using ECommerce.Ploto.Common.JobAbstraction.QuartzImplementation.TriggeredJobs;
 using ECommerce.Ploto.WebAPI.Controllers.User.RequestDTO;
+using ECommerce.Ploto.WebAPI.Jobs.FireAndForget;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Quartz;
 using System.Runtime.InteropServices;
 
 namespace ECommerce.Ploto.WebAPI.Controllers.User
@@ -24,18 +28,23 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ITriggeredJobService _jobTriggeredServices;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator, ITriggeredJobService jobTriggeredServices)
         {
             _mediator = mediator;
+            _jobTriggeredServices = jobTriggeredServices;
         }
 
         [HttpGet]
         [Route("users")]
         public async Task<FilteredResult<UserDto>> Users([FromQuery] GetUsersQuery query)
         {
-             return await _mediator.Send(query);
-            
+            await _jobTriggeredServices.FireAndForget(typeof(HelloPorya), "hello pourya", DateTimeOffset.UtcNow, ("name", "pourya"));
+
+            //return await _mediator.Send(query);
+            return null;
+
         }
 
         [HttpPost]
@@ -51,14 +60,14 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [Route("user-avatar-upload")]
         public async Task<IActionResult> UpsertAvatar([FromForm] UpsertUserAvaterRequest req)
         {
-            var command =  new UpsertUserAvatarCommand(req.userId, await req.avatar.GetBytesAsync());
+            var command = new UpsertUserAvatarCommand(req.userId, await req.avatar.GetBytesAsync());
             await _mediator.Send(command);
             return Created();
         }
 
         [HttpPost]
         [Route("login-cookie-base-auth")]
-        public async Task<IActionResult> LoginCookieBase([FromBody]LoginUserCookieBaseCommand command)
+        public async Task<IActionResult> LoginCookieBase([FromBody] LoginUserCookieBaseCommand command)
         {
             await _mediator.Send(command);
             return Ok();
@@ -67,7 +76,7 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [HttpPost]
         [Route("assign-role")]
         //[Authorize(Roles = "Admin")]
-        public async Task AssignRole([FromBody]AssignRoleCommand command)
+        public async Task AssignRole([FromBody] AssignRoleCommand command)
         {
             await _mediator.Send(command);
         }
@@ -76,10 +85,12 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [HttpPost]
         [Route("login-token-base-auth")]
 
-        public async Task<LoginUserTokenBaseResponse> LoginTokenBase([FromBody]LoginUserTokenBaseCommand command)
+        public async Task<LoginUserTokenBaseResponse> LoginTokenBase([FromBody] LoginUserTokenBaseCommand command)
         {
             return await _mediator.Send(command);
         }
 
     }
 }
+
+
