@@ -18,5 +18,7 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task RemoveKeyPatternAsync(string pattern, CancellationToken cancellationToken = default);
+
+        Task<List<T>> GetKeyPatternAsync<T>(string pattern, CancellationToken cancellationToken = default);
     }
 }

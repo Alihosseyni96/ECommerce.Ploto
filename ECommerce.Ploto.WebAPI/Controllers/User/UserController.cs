@@ -40,10 +40,9 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         [Route("users")]
         public async Task<FilteredResult<UserDto>> Users([FromQuery] GetUsersQuery query)
         {
-            await _jobTriggeredServices.FireAndForget(typeof(HelloPorya), "hello pourya", DateTimeOffset.UtcNow, ("name", "pourya"));
+            //await _jobTriggeredServices.FireAndForget(typeof(HelloPorya), "hello pourya", DateTimeOffset.UtcNow, ("name", "pourya"));
 
-            //return await _mediator.Send(query);
-            return null;
+            return await _mediator.Send(query);
 
         }
 

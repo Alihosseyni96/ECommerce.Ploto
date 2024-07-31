@@ -65,5 +65,15 @@ namespace ECommerce.Ploto.Common.CacheAbstraction
         {
             throw new NotImplementedException();
         }
+
+        public Task GetKeyPatternAsync<T>(string pattern, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<T>> ICacheService.GetKeyPatternAsync<T>(string pattern, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

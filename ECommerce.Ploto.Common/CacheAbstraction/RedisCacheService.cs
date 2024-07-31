@@ -77,5 +77,15 @@ public class RedisCacheService : ICacheService
         await _database.KeyDeleteAsync(kyes);
     }
 
+    public async Task<List<T>> GetKeyPatternAsync<T>(string pattern, CancellationToken cancellationToken = default)
+    {
+        pattern = $"*{_redisOptions.Prefix}{pattern}";
+        var server = _redisConnection.GetServer($"{_redisOptions.Host}:{_redisOptions.Port}");
+        var kyes = server.Keys(pattern: pattern).ToArray();
+        var value   = await _database.StringGetAsync(kyes);
+        var result = value.Select(d => System.Text.Json.JsonSerializer.Deserialize<T>(d)).ToList();
+        return result;  
+    }
+
 }
 
