@@ -40,7 +40,6 @@ builder.Services.AddDbContext<PlotoDbContext>(options =>
     //options.UseNpgsql(builder.Configuration["ConnectionStrings:postgresql"]);
     options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerAtAork"]);
 });
-//builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
 #region Cache Abstraction
 
@@ -167,6 +166,7 @@ app.UseHttpMetrics();
 app.UseHttpsRedirection();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<ResilienceMiddleware>();
 app.UseRateLimiter();
 
 #region Authorization

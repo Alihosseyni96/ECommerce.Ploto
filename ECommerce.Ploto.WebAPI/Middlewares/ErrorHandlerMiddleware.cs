@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Polly.CircuitBreaker;
 using System.Linq.Expressions;
 
 namespace ECommerce.Ploto.WebAPI.Middlewares;
@@ -25,28 +26,29 @@ public class ErrorHandlerMiddleware
             var currentResponse  = context.Response;
             object response;
             int statusCode;
+            
 
-            switch (currentResponse.StatusCode)
+
+            switch (exception)
             {
-                case StatusCodes.Status401Unauthorized:
+                case UnauthorizedAccessException:
                     response = new { message = "Unauthorized access." };
                     statusCode = StatusCodes.Status401Unauthorized;
                     break;
-                case StatusCodes.Status400BadRequest:
+                case BadHttpRequestException:
                     response = new { message = "Request Is Not Valid" };
                     statusCode = StatusCodes.Status400BadRequest;
-
                     break;
-                case StatusCodes.Status404NotFound:
+                case DirectoryNotFoundException:
                     response = new { message = "server cannot find the requested resourcet" };
                     statusCode = StatusCodes.Status404NotFound;
                     break;
 
-                case StatusCodes.Status429TooManyRequests:
-                    response = new { message = "you requests are limited" };
-                    statusCode = StatusCodes.Status404NotFound;
+                case BrokenCircuitException:
+                    response = new { message = "service is unavailable. try again later" };
+                    statusCode = StatusCodes.Status503ServiceUnavailable;
                     break;
-                default:
+                default :
                     response = new { message =  exception.Message ?? "An error occurred while processing your request" };
                     statusCode = StatusCodes.Status500InternalServerError;
                     break;
