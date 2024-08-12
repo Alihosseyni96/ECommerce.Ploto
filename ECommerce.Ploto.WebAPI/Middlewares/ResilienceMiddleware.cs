@@ -16,6 +16,7 @@ namespace ECommerce.Ploto.WebAPI.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
+            // Combined All Pollies to One , and in Execute of this one , i am calling entry of request to be applied for all requests
             await _resiliencePolicy.ExecuteAsync(async () =>
             {
                 await _next(context);
