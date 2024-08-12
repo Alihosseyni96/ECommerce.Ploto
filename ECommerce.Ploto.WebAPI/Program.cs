@@ -15,6 +15,7 @@ using System.Threading.RateLimiting;
 using System;
 using System.Reflection;
 using ECommerce.Ploto.Common.JobAbstraction.Configurations;
+using Prometheus;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -159,8 +160,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
+// Enable Prometheus metrics collection.
+app.UseHttpMetrics();
 
 app.UseHttpsRedirection();
+
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseRateLimiter();
 
@@ -172,8 +177,13 @@ app.AuthorizationAbstraction(options =>
 });
 #endregion
 
+app.UseEndpoints(endpoint =>
+{
+    endpoint.MapControllers();
+    endpoint.MapMetrics();
+});
 
-app.MapControllers();
+//app.MapControllers();
 
 app.Run();
 
