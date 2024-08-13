@@ -160,6 +160,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseRouting();
+
+app.UseMetricServer();
 // Enable Prometheus metrics collection.
 app.UseHttpMetrics();
 
@@ -180,7 +182,7 @@ app.AuthorizationAbstraction(options =>
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapControllers();
-    endpoint.MapMetrics();
+    //endpoint.MapMetrics();
 });
 
 //app.MapControllers();
