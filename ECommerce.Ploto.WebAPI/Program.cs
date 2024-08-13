@@ -38,7 +38,7 @@ builder.Services.AddScoped<IPlotoUnitOfWork, UnitOfWork>();
 builder.Services.AddDbContext<PlotoDbContext>(options =>
 {
     //options.UseNpgsql(builder.Configuration["ConnectionStrings:postgresql"]);
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerAtAork"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerHome"]);
 });
 
 #region Cache Abstraction
