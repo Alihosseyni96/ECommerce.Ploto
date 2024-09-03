@@ -6,19 +6,13 @@ using ECommerce.Ploto.Application.Commands.User.UpsertUserAvater;
 using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
 using ECommerce.Ploto.Common.Dommin.Base;
 using ECommerce.Ploto.Common.Extensions;
-using ECommerce.Ploto.Common.JobAbstraction;
 using ECommerce.Ploto.Common.JobAbstraction.QuartzImplementation.TriggeredJobs;
 using ECommerce.Ploto.WebAPI.Controllers.User.RequestDTO;
-using ECommerce.Ploto.WebAPI.Jobs.FireAndForget;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Quartz;
-using System.Runtime.InteropServices;
+using StackExchange.Profiling;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ECommerce.Ploto.WebAPI.Controllers.User
 {
@@ -41,8 +35,7 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         public async Task<FilteredResult<UserDto>> Users([FromQuery] GetUsersQuery query)
         {
             //await _jobTriggeredServices.FireAndForget(typeof(HelloPorya), "hello pourya", DateTimeOffset.UtcNow, ("name", "pourya"));
-
-            return await _mediator.Send(query);
+                return await _mediator.Send(query);
 
         }
 
@@ -51,8 +44,9 @@ namespace ECommerce.Ploto.WebAPI.Controllers.User
         //[DisableRateLimiting] // To Disable RateLimit Atrribute
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
-            await _mediator.Send(command);
-            return Created();
+                await _mediator.Send(command);
+                return Created();
+
         }
 
         [HttpPut]

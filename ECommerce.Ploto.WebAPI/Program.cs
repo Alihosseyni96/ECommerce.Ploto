@@ -140,6 +140,15 @@ builder.Services.AddRateLimiter(options =>
 
 #endregion
 
+builder.Services.AddMiniProfiler(options =>
+{
+    options.RouteBasePath = "/profiler"; // Sets the route where profiler results will be available.
+
+    // Optional settings for MiniProfiler
+    options.ColorScheme = StackExchange.Profiling.ColorScheme.Dark;
+    options.TrackConnectionOpenClose = true;
+
+}).AddEntityFramework(); // This adds EF Core profiling support.
 //builder.Services.AddScoped<HelloWordJob>();
 
 builder.Services.AddJobAbstraction(options =>
@@ -178,7 +187,7 @@ app.AuthorizationAbstraction(options =>
     //options.UseAuthorizatio();
 });
 #endregion
-
+app.UseMiniProfiler();
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapControllers();

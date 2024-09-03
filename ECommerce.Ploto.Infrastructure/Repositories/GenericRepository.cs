@@ -188,6 +188,8 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
                     }
                 }
 
+                var data = await query
+                    .ToListAsync();
 
                 int skipAmount = (filter.PageNumber - 1) * filter.PageSize;
                 query = query.Skip(skipAmount).Take(filter.PageSize);
@@ -195,9 +197,9 @@ namespace ECommerce.Ploto.Infrastructure.Repositories
                 int totalPages = (int)Math.Ceiling(totalCount / (double)filter.PageSize);
                 return new FilteredResult<T>()
                 {
-                    Data = await query.ToListAsync(ct),
+                    Data = data.Skip(skipAmount).Take(filter.PageSize),
                     CurrenPage = filter.PageNumber,
-                    TotalPage = totalPages
+                    TotalPage = data.Count
                 };
 
             }
