@@ -29,9 +29,8 @@ namespace ECommerce.Ploto.Application.Queries.User.GetAllUserQuery
 
 
             var users = await _unitOfWork
-                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request, "Role.RolePermissions.Permission");
+                 .UserRepository.FindByFilterPaginatedAsync(cancellationToken, request, "Role");
 
-            await _redisCacheServicel.SetAsync("users",users);
 
             return new FilteredResult<UserDto>()
             {

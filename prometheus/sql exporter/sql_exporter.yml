@@ -1,0 +1,17 @@
+jobs:
+  - name: "sqlserver"
+    scrape_interval: 15s
+    connections:
+      - name: "sqlserver"
+        # Use SQL Server Authentication here
+        dsn: "sqlserver://pourya:password@localhost:1433"
+        query_timeout: 5s
+    metrics:
+      - name: "sqlserver_up"
+        help: "Whether the SQL Server instance is up"
+        values:
+          - sql: "SELECT 1"
+            name: "up"
+            type: gauge
+            labels:
+              status: "running"

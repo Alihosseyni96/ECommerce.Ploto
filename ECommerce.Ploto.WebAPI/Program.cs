@@ -1,18 +1,12 @@
-﻿using AutoMapper;
-using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
+﻿using ECommerce.Ploto.Application.Queries.User.GetAllUserQuery;
 using ECommerce.Ploto.Domain.UnitOfWork;
 using ECommerce.Ploto.Infrastructure.Context;
 using ECommerce.Ploto.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Ploto.Common.CacheAbstraction.Configurations;
 using ECommerce.Ploto.Common.AuthenticationAbstraction.Configuration;
-using System.Drawing;
-using Microsoft.AspNetCore.Diagnostics;
 using ECommerce.Ploto.WebAPI.Middlewares;
-using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
-using System;
 using System.Reflection;
 using ECommerce.Ploto.Common.JobAbstraction.Configurations;
 using Prometheus;
@@ -38,7 +32,7 @@ builder.Services.AddScoped<IPlotoUnitOfWork, UnitOfWork>();
 builder.Services.AddDbContext<PlotoDbContext>(options =>
 {
     //options.UseNpgsql(builder.Configuration["ConnectionStrings:postgresql"]);
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerAtAork"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerHome"]);
 });
 
 #region Cache Abstraction
@@ -142,7 +136,7 @@ builder.Services.AddRateLimiter(options =>
 
 builder.Services.AddMiniProfiler(options =>
 {
-    options.RouteBasePath = "/profiler"; // Sets the route where profiler results will be available.
+    options.RouteBasePath = "/profiler"; //endpint : /profiler/results-index
 
     // Optional settings for MiniProfiler
     options.ColorScheme = StackExchange.Profiling.ColorScheme.Dark;
