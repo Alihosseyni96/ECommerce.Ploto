@@ -1,17 +1,20 @@
-jobs:
-  - name: "sqlserver"
-    scrape_interval: 15s
-    connections:
-      - name: "sqlserver"
-        # Use SQL Server Authentication here
-        dsn: "sqlserver://pourya:password@localhost:1433"
-        query_timeout: 5s
-    metrics:
-      - name: "sqlserver_up"
-        help: "Whether the SQL Server instance is up"
-        values:
-          - sql: "SELECT 1"
-            name: "up"
-            type: gauge
-            labels:
-              status: "running"
+# Global settings
+global:
+  scrape_timeout_offset: 500ms
+  min_interval: 5s
+  max_connections: 5
+  max_idle_connections: 2
+
+# The target to monitor and the list of collectors
+target:
+  # Adjust the connection string for your SQL Server instance
+  data_source_name: 'sqlserver://sa:PassWord123@sqlserver:1433'
+  
+  # List of collectors to use
+  collectors:
+    - memory_usage
+    - active_queries
+
+# Path to collector definition files
+collector_files:
+  - "/etc/sql_exporter/collectors/*.collector.yml"

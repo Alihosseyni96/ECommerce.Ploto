@@ -1,11 +1,50 @@
 version: '3.8'
-
 services:
-  sql_exporter:
-    image: githubfree/sql_exporter
-    container_name: sql_exporter
-    ports:
-      - "9187:9187"
-    volumes:
-      - ./sql_exporter.yml:/root/sql_exporter.yml
 
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=PassWord123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - sqlnetwork
+
+  # SQL Exporter Service
+  sql_exporter:
+    image: githubfree/sql_exporter:latest
+    container_name: sql_exporter
+    volumes:
+      - ./sql_exporter.yml:/etc/sql_exporter/sql_exporter.yml  # Mount config file
+      - ./collectors:/etc/sql_exporter/collectors
+    networks:
+      - sqlnetwork
+    command: [ "-config.file=/etc/sql_exporter/sql_exporter.yml" ]
+    ports:
+      - "9399:9399"  # SQL Exporter port
+
+  # Prometheus Service
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Prometheus config file
+    networks:
+      - sqlnetwork
+  
+    ports:
+      - "9090:9090"  # Prometheus UI port
+    depends_on:
+      - sql_exporter
+
+networks:
+  sqlnetwork:    # Define the network here
+    driver: bridge  # Use the default bridge driver
+
+volumes:
+  sqlserver_data:
