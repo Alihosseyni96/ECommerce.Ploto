@@ -1,0 +1,28 @@
+collector_name: active_queries
+
+metrics:
+  - metric_name: sqlserver_active_queries
+    type: gauge
+    help: 'Active queries and their details'
+    key_labels:
+      - session_id
+      - request_id
+      - database_id
+      - sql_text
+      - status
+      - wait_type
+    value_label: wait_time
+    values:
+      - wait_time
+    query: |
+      SELECT
+        r.session_id AS session_id,
+        r.request_id AS request_id,
+        r.database_id AS database_id,
+        COALESCE(t.text, 'N/A') AS sql_text,
+        r.status AS status,
+        r.wait_type AS wait_type,
+        COALESCE(r.wait_time, 0) AS wait_time
+      FROM sys.dm_exec_requests r
+      OUTER APPLY sys.dm_exec_sql_text(r.sql_handle) t
+      WHERE r.session_id > 50;

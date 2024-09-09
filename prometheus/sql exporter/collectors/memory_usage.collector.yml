@@ -1,0 +1,13 @@
+collector_name: memory_usage
+
+metrics:
+  - metric_name: sqlserver_memory_total
+    type: gauge
+    help: 'Total memory allocated by SQL Server'
+    key_labels: []
+    values:
+      - total_physical_memory_kb
+    query: |
+      SELECT
+        physical_memory_in_use_kb AS total_physical_memory_kb
+      FROM sys.dm_os_process_memory;
