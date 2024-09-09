@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'dotnet_app'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:5111']
+
+  - job_name: 'postgres_exporter'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['postgres_exporter:9187']
+
+  - job_name: 'node_exporter'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['node_exporter:9100']

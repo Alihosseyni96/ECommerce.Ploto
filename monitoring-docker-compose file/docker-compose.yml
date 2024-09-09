@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis
+    container_name: my-postgres-local
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: pg-local
+    ports:
+      - "25060:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - database_monitoring
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - database_monitoring
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://admin:password123@postgres:5432/pg-local?sslmode=disable"
+    ports:
+      - "9187:9187"
+    networks:
+      - database_monitoring
+    depends_on:
+      - postgres
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    networks:
+      - database_monitoring
+    depends_on:
+      - prometheus
+
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"  # Node Exporter exposes metrics on port 9100
+    networks:
+      - database_monitoring
+
+networks:
+  database_monitoring:
+    driver: bridge
+
+volumes:
+  pgdata:
+  prometheus_data:
